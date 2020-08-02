@@ -49,3 +49,5 @@ func main0801() {
 		fmt.Println("下标:", i, "具体的值：", *arr[i])
 	}
 }
+
+///

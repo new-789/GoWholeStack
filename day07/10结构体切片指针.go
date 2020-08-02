@@ -53,3 +53,5 @@ func main1001() {
 
 	fmt.Printf("查看指针变量p的类型：%T\n", p)
 }
+
+///

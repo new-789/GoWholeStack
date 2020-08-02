@@ -36,3 +36,5 @@ func main0103() {
 	*p = 128
 	fmt.Println(*p)
 }
+
+///

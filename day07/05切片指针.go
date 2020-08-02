@@ -30,3 +30,5 @@ func main0501() {
 	fmt.Printf("指针变量内存地址: %p\n", p)
 	fmt.Printf("切片变量内存地址: %p\n", slice)
 }
+
+///
