@@ -35,3 +35,5 @@ func main0801() {
 	// 上面 for 循环中的拷贝操作可以使用 io 包中的 Cope 函数一次性解决如下(但对于初学者来说不建议这么操作)
 	//io.Copy(file1, file2)
 }
+
+// saskkasjh
