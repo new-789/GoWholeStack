@@ -21,5 +21,3 @@ func main0201() {
 	test2()
 	test3()
 }
-
-// saskkasjh

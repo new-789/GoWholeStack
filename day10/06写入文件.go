@@ -79,5 +79,3 @@ func main0603() {
 	b := []byte("锄禾日当午,汗滴禾下土,谁知盘中餐,粒粒皆辛苦!")
 	file.WriteAt(b, num)
 }
-
-// saskkasjh

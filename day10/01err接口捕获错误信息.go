@@ -24,5 +24,3 @@ func main0101() {
 		fmt.Println(value)
 	}
 }
-
-// saskkasjh
