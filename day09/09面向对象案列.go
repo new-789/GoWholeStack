@@ -37,6 +37,7 @@ func (g *GongChang) JiSuanJieGuo(num1, num2 int, yunsuanfu string) (value int) {
 	case "-":
 		jiekou = &JianFaZiLei{FuLei{num1, num2}}
 	default:
+		// 此条代码有错误提示，待解决
 		fmt.Println("sorry, 没有匹配到对应的方法，请检查您传入的参数是否正确")
 	}
 	value = DuoTai(jiekou)
