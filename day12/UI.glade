@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<interface>
+  <requires lib="gtk+" version="2.16"/>
+  <!-- interface-naming-policy project-wide -->
+  <object class="GtkWindow" id="Win1">
+    <property name="width_request">480</property>
+    <property name="height_request">320</property>
+    <child>
+      <object class="GtkFixed" id="fixed1">
+        <property name="width_request">480</property>
+        <property name="height_request">320</property>
+        <property name="visible">True</property>
+        <child>
+          <object class="GtkButton" id="Btn1">
+            <property name="label" translatable="yes">button</property>
+            <property name="width_request">124</property>
+            <property name="height_request">36</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="x">310</property>
+            <property name="y">42</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="Lab1">
+            <property name="width_request">191</property>
+            <property name="height_request">65</property>
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">label</property>
+          </object>
+          <packing>
+            <property name="x">18</property>
+            <property name="y">24</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
