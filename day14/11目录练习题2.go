@@ -62,7 +62,7 @@ func ReadInfo(src string, dirNames []string) {
 				fmt.Println("readBytes err:", err)
 				break
 			}
-			nameSlice = append(nameSlice, strings.Fields(string(buf))...)
+			nameSlice = append(nameSlice, strings.Fields(string(buf[:]))...)
 		}
 		// 调用函数统计文件中单词的个数
 		CountNum(nameSlice)
