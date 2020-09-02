@@ -73,7 +73,7 @@ func ReadInfo(src string, dirNames []string) {
 func CountNum(fileInfo []string) {
 	// 创建 map 用来存放单词出现的次数
 	count := make(map[string]int)
-	// 循环统计单词个数，并存防止 map 中
+	// 循环统计单词个数，并存放置在 map 中
 	for i := 0; i < len(fileInfo); i++ {
 		if _, has := count[fileInfo[i]]; !has {
 			count[fileInfo[i]] = 1
