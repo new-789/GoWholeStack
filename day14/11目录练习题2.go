@@ -86,7 +86,7 @@ func CountNum(fileInfo []string) {
 	return
 }
 
-func main1101() {
+func main11() {
 	// 接收用户输入的目录路径
 	fmt.Println("请输入要找寻的目录>>:")
 	var path string
