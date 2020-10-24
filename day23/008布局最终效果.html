@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .news_con{
+            width: 285px;
+            height: 310px;
+            /* 设置顶部边框 */
+            border-top: 1px solid #c8dcf2;
+            /* 设置底部边框 */
+            border-bottom: 1px solid #c8dcf2;
+        }
+        .news_con div{
+            /* 宽度 width 不用设置，默认等于父级的宽度 */
+            height: 40px;
+        }
+        /* 层级选择器可以越级选择 */
+        .news_con h3{
+            /* 设置浮动让 h3 和 a 标签可以排列在一行 */
+            float: left;
+
+            /* 清除 h3 标题默认的外边距 */
+            margin: 0px;
+            /* 设置文字颜色 */
+            color: #172c45;
+            /* 设置文字大小 */
+            font-size: 16px;
+            /* 设置文字字体 */
+            font-family: 'Microsoft Yahei';
+            /* 设置文字不加粗 */
+            font-weight: normal;
+            /* 通过设置行高将单行文字垂直居中 */
+            line-height: 40px;
+        }
+        .news_con a{
+            float: right;
+            color: #172c45;
+            font-size: 12px;
+            font-family: 'Microsoft Yahei';
+            font-weight: normal;
+            line-height: 40px;
+            /* 去掉文字默认下划线 */
+            text-decoration: none;
+        }
+        .news_con img{
+            width: 285px;
+        }
+
+        .news_con p{
+            font-size: 12px;
+            color: #737373;
+            font-family: 'Microsoft Yahei';
+            line-height: 20px;
+            /* 设置首行缩进 */
+            text-indent: 24px;
+            /* 清除 p 标签的默认外边距 */
+            margin: 0px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="news_con">
+        <!-- 第一行 -->
+        <div>
+            <h3>今日头条</h3>
+            <a href="#">更多&gt;&gt;</a>
+        </div>
+        <!-- 第二行 -->
+        <img src="images/banner.png" alt="png">
+        <!-- 第三行 -->
+        <p>
+            人工智能（Artificial Intelligence），
+            英文缩写AI。它的研究，开发用于模拟、延伸和扩展人的只能的理论、方法、技术及应用系统的
+            一门新的技术科学。人工智能是计算机科学的一个分支，它企图了解智能的实质，并生产出一种
+            新的能以人类智能相似的方式做出反应的智能机器，该领域的研究包括机器人、语言识别、图像
+            识别、自然语言处理和专家系统等。
+        </p>
+    </div>
+</body>
+</html>

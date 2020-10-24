@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>用户注册</h3>
+    <!-- action：设置提交的地址，method：设置提交的方式 -->
+    <form action="" method="post">
+        <p>
+            <label>用户名:</label>
+            <input type="text" name="username">
+        </p>
+
+        <p>
+            <label>密&nbsp;&nbsp;&nbsp;码：</label>
+            <input type="password" name="passwd">
+        </p>
+
+        <p>
+            <label>性&nbsp;&nbsp;&nbsp;别：</label>
+            <input type="radio" name="gender" value="1"> 男
+            <input type="radio" name="gender" value="0"> 女
+        </p>
+
+        <p>
+            <label>爱&nbsp;&nbsp;&nbsp;好：</label>
+            <input type="checkbox" name="hobby" value="study"> 学习
+            <input type="checkbox" name="hobby" value="self-study"> 自习
+            <input type="checkbox" name="hobby" value="programmer"> 编程
+            <input type="checkbox" name="hobby" value="review"> 复习
+            <input type="checkbox" name="hobby" value="foot"> 捏脚
+        </p>
+
+        <p>
+            <label>玉&nbsp;&nbsp;&nbsp;照：</label>
+            <input type="file" name="pic">
+        </p>
+
+        <p>
+            <label>籍&nbsp;&nbsp;&nbsp;贯：</label>
+            <select name="site">
+                <option value="HN">湖南</option>
+                <option value="GD">广东</option>
+                <option value="HB">河北</option>
+                <option value="TJ">天津</option>
+                <option value="BJ">北京</option>
+            </select>
+        </p>
+
+        <p>
+            <label>简&nbsp;&nbsp;&nbsp;介：</label>
+            <textarea name="info"></textarea>
+        </p>
+
+        <p>
+            <input type="submit" value="提交">
+            <input type="reset" value="重置">
+            <input type="button" value="普通按钮">
+        </p>
+    </form>
+</body>
+</html>

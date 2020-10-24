@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .list{
+            /* 去掉列表的小圆点 */
+            list-style: none;
+            /* 清除列表默认的内边距 */
+            padding: 0;
+            /* 清除列表默认的外边距 */
+            margin: 0;
+        }
+
+        .list li{
+            line-height: 50px;
+            border-bottom: 1px solid black;
+            text-indent: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 创建列表标签快捷键：`ul>li{列表文件}*n + tab` 表示 ul 标签包含六个 li 标签 {} 中括号中的内容则为 li 标签中包含的内容可以是标签, n 则表示 li 标签的个数 -->
+    <ul class="list">
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+    </ul>
+
+    <!-- `ul>(li>a{列表文字})*6 + tab` 快捷键 -->
+    <ul>
+        <li><a href="#">列表文字</a></li>
+        <li><a href="#">列表文字</a></li>
+        <li><a href="#">列表文字</a></li>
+        <li><a href="#">列表文字</a></li>
+        <li><a href="#">列表文字</a></li>
+        <li><a href="#">列表文字</a></li>
+    </ul>
+</body>
+</html>

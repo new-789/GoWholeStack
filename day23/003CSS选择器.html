@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 定义标签选择器，标签选择器会影响所有同类型的标签，一般比较少用 */
+        div{color: red;}
+
+        /* 定义类选择器，一个类可以用在多个标签上，一个标签可以使用多个类，是使用最多的一种选择器 */
+        .blue{color: blue;}
+        .big{font-size: 30px;}
+
+        /* 定义层级选择器 */
+        .blue span{
+            font-size: 20px;
+            color: purple;
+        }
+    </style>
+</head>
+<body>
+    <div>这是一个 div 标签</div>
+    <div>这是第二个 div 标签</div>
+
+    <p class="blue">这是一个 p 标签</p>
+    <p class="big blue">这是第二个 p 标签</p>
+
+    <p class="blue">设为首页关于百度About Baidu百度营<span>这是一个 span 标签</span>销使用百度前必读意见反馈帮助中心</p>
+    <span>外面的 span 标签</span>
+</body>
+</html> 
