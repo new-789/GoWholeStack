@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .con{
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* 组选择器使用实例 */
+        .box01,.box02,.box03{
+            width: 200px;
+            height: 80px;
+            margin: 10px;
+            position: absolute;
+        }
+
+        .box01{
+            background: red;
+            left: 0px;
+            top: 0;
+            /* 设置定位元素的层级 */
+            z-index: 4;
+        }
+        .box02{
+            background: orange;
+            left: 30px;
+            top: 30px;
+            z-index: 5;
+        }
+        .box03{
+            background: lightskyblue;
+            left: 60px;
+            top: 60px;
+            z-index: 3;
+        }
+    </style>
+</head>
+<body>
+    <div class="con">
+        <div class="box01">1</div>
+        <div class="box02">2</div>
+        <div class="box03">3</div>
+    </div>
+</body>
+</html>

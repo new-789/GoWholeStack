@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .pop{
+            width: 500px;
+            height: 300px;
+            border: 1px solid black;
+            background: white;
+            /* 设置固定定位，让弹框相对于浏览器窗口来定位，同时可以盖住其他元素 */
+            position: fixed;
+            /* 定位元素水平垂直居中的技巧 */
+            left: 50%;
+            margin-left: -251px;
+            top: 50%;
+            margin-top: -151px;
+            /* 将弹框层级设置成一个很大的值，保证它可以盖住其它任何元素 */
+            z-index: 9999;
+        }
+
+        /* 弹框透明背景样式 */
+        .mask{
+            position: fixed;
+            /* 设置为固定定位，宽度和高度就可以参照浏览器窗口的大小来设置 */
+            width: 100%;
+            height: 100%;
+            left: 0px;
+            top: 0px;
+            background: black;
+            /* 设置该属性为 9998 仅比弹框小一级确保除了弹框之外可以盖住所有元素 */
+            z-index: 9998;
+            /* 设置元素的透明度 */
+            opacity: 0.3;
+            /* 透明度兼容 ie 写法 */
+            filter: alpha(opacity=30);
+        }
+        /* 设置弹框默认不显示 */
+        .pop_con{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>页面的内容</h1>
+    <!-- 使用 div 标签将弹框内容包裹，用来显示和隐藏弹框，当点击某按钮时为该标签添加 style="display:block;" 属性则显示弹框 -->
+    <div class="pop_con" style="display:block;">
+        <!-- 弹框内容 -->
+        <div class="pop">
+            <h3>弹框标题</h3>
+            <p>弹框的内容</p>
+        </div>
+        <!-- 该 div 用来设置弹框的整个背景，即弹框透明的部分 -->
+        <div class="mask"></div>
+    </div>
+</body>
+</html>

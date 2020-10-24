@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .con{
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+            margin: 0 auto;
+        }
+
+        /* 组选择器使用实例 */
+        .box01,.box02,.box03{
+            width: 200px;
+            height: 80px;
+            margin: 10px;
+        }
+
+        .box01{
+            background: red;
+            /* 设置相对定位 */
+            position: relative;
+            /* 设置偏移属性 */
+            left: 50px;
+            top: 50px;
+        }
+        .box02{
+            background: orange;
+        }
+        .box03{
+            background: lightskyblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="con">
+        <div class="box01">1</div>
+        <div class="box02">2</div>
+        <div class="box03">3</div>
+    </div>
+</body>
+</html>

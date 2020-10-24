@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .search_form{
+            width: 602px;
+            height: 42px;
+            background: gold;
+            margin: 100px auto;
+        }
+        .input_text{
+            width: 500px;
+            height: 40px;
+            border: 1px solid #0fad10;
+            /* 清除输入框默认 padding */
+            padding: 0px;
+            /* 通过浮动解决内联元素默认间距以及基线对齐的问题 */
+            float: left;
+            /* 让文字缩进 */
+            text-indent: 15px;
+            /* 去掉输入框点击时的高亮框 */
+            outline: none;
+        }
+        .input_sub{
+            width: 100px;
+            height: 42px;
+            background: #0fad10;
+            /* 去掉按钮默认边框 */
+            border: 0;
+            float: left;
+            color: white;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <form class="search_form" action="https://cn.bing.com/search" method="get">
+        <!-- placeholder：设置输入框默认的提示文字 -->
+        <input type="text" name="q" placeholder="请输入搜索内容" class="input_text">
+        <input type="submit" value="搜 &nbsp;&nbsp;&nbsp;&nbsp;索" class="input_sub">
+    </form>
+</body>
+</html>

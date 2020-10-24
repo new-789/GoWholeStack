@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .con{
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+            margin: 50px auto;
+
+            /* 在父级上设置子级超出部分如何显示*/
+            /*
+                visible: 显示超出的部分;
+                hidden: 隐藏超出的部分;
+                scroll: 不管子级是否超出，都显示滚动条或者滚动条的背景框;
+                auto: 通过子级的尺寸，动态显示滚动条;
+             */
+            overflow: auto;
+        }
+        .box{
+            width: 200px;
+            height: 500px;
+            background: gold;
+        }
+    </style>
+</head>
+<body>
+    <div class="con">
+        <div class="box">
+            <div>文字内容</div>
+            <br>
+            <br>
+            <br>
+            <div>文字内容</div>
+            <br>
+            <br>
+            <br>
+            <div>文字内容</div>
+        </div>
+    </div>
+</body>
+</html>
