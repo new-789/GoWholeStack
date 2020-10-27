@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .list{
+            width: 300px;
+            list-style: none;
+            padding: 0;
+            margin: 50px auto 0;
+        }
+        .list li{
+            line-height: 40px;
+            border-bottom: 1px dotted black;
+            margin: 0;
+            padding: 0;
+        }
+        .list span{
+            color: red;
+            margin-right: 15px;
+        }
+        .list a{
+            text-decoration: none;
+            color: blue;
+        }
+        .list a:hover{
+            color: orange;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            var aList = ['红海','碟中谍','唐人街探案1','盗墓笔记','美人鱼','熊出没','误杀','三傻大闹宝莱坞','我和我的家乡'];
+            var sTr = '';
+
+            var oUl = document.getElementById('list');
+
+            for (i=0;i<aList.length;i++) {
+                sTr += '<li>'+'<span>'+i+'</span>'+'<a href="#">'+aList[i]+'</a>'+'</li>';
+            };
+            oUl.innerHTML=sTr;
+        }
+    </script>
+</head>
+<body>
+    <ul class="list" id="list"></ul>
+</body>
+</html>

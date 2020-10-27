@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 创建数组的第一种方式
+        var aList01 = new Array(1,2,3);
+
+        // 创建数组的第二种方式,直接量的方式，常用
+        var aList02 = ['a','b','c','d'];
+
+        // 获取数组成员个数
+        var aLen = aList02.length;
+        // alert(aLen);
+        
+        // 操作数组的某个成员
+        // alert(aList02[2]);
+        
+        // 在数组后添加成员
+        aList02.push('e')
+        // alert(aList02);
+        
+        // 删除数组中最后一个成员
+        aList02.pop();
+        // alert(aList02);
+
+        // 将数组进行反转
+        aList02.reverse();
+        // alert(aList02);
+
+        // 获取某个成员在数组中第一次出现的索引值，成员若不存在返回 -1
+        var aList03 = ['a','b','c','d','a','b','c','d'];
+        // alert(aList03.indexOf('c'));
+        // alert(aList03.indexOf('e'));
+
+        // 将数组通过某个字符串拼接成一个大的字符串返回
+        var sTr = aList03.join('-');
+        var sTr02 = aList03.join('');
+        // alert(sTr);
+        // alert(sTr02);
+
+        // 同事在数组中增加或删除成员
+        aList03.splice(4,2);
+        alert(aList03);  // a,b,c,d,c,d
+
+        aList03.splice(4,2,'e','f','g');
+        alert(aList03);
+
+        // 多维数组
+        var aList04 = [[1,2,3],['a','b','c']];
+        alert(aList04[1][2]);  // 弹出 c
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

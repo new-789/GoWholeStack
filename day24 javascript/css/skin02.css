@@ -1,0 +1,13 @@
+body{
+    background: green;
+}
+
+input{
+    width: 200px;
+    height: 50px;
+    background: gold;
+    /* 设置按钮圆角 */
+    border: 0; 
+    /* 去除 input 标签外边框 */
+    outline: none;
+}

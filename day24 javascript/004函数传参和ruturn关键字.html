@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 定义可以传参的函数
+        function fnAdd(iNum01,iNum02){
+            var iRs = iNum01+iNum02;
+            // 返回函数的返回值
+            return iRs;
+            // return 会结束函数的运行所以，它下面的的语句不会被执行
+            
+            // return; 只写一个 return 表示在这一句结束函数的运行，但是不返回值
+            alert('here!');
+        }
+        // 调用传参的函数，函数如果没有返回值，得到的值是 undefine
+        // 如果有返回值则会接受到函数的返回值
+        var iCount = fnAdd(10,20);
+        alert(iCount);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

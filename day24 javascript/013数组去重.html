@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 数组去重操作
+        var aList = [1,2,3,4,4,3,2,1,2,3,4,5,6,5,5,3,3,4,2,1];
+        // 创建一个新数组用来存储去重后的内容
+        var aList2 = [];
+        // 循环需要去重的数组
+        for (i=0;i<aList.length;i++) {
+            // 判断需要去重的数组中每一个元素第一次出现的索引如果等于循环的次数 i 就添加进新的数组中
+            if (aList.indexOf(aList[i]) == i) {
+                aList2.push(aList[i]);
+            };
+        };
+        alert(aList2);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

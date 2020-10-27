@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en/zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body,ul{
+            margin: 0;
+            padding: 0;
+        }
+        .list_con{
+            width: 1000px;
+            height: 164px;
+            border: 1px solid #000;
+            margin: 10px auto 0;
+            background-color: #f0f0f0;
+            position: relative;;
+            overflow: hidden;
+        }
+        .list_con ul{
+            list-style: none;
+            width: 2000px;
+            height: 164px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .list_con li{
+            width: 180px;
+            height: 162px;
+            float: left;
+            margin: 10px;
+        }
+        .btns_con{
+            width: 1000px;
+            height: 30px;
+            margin: 50px auto 0;
+            position: relative;
+        }
+        .left,.right{
+            width: 30px;
+            height: 30px;
+            background-color: gold;
+            position: absolute;
+            left: -40px;
+            top: 110px;
+            font-size: 30px;
+            line-height: 30px;
+            color: #000;
+            font-family: 'Arial';
+            text-align: center;
+            cursor: pointer;
+            border-radius: 15px;
+            opacity: 0.5;
+        }
+        .right{
+            left: 1010px;
+            top: 110px;
+        }
+        .left{
+            right: 1010px;
+            top: 110px;
+        }
+    </style>
+    <script>
+        window.onload=function() {
+            // 获取元素
+            var oList = document.getElementById('list');
+            var oLeftBtn = document.getElementById('btn01');
+            var oRightBtn = document.getElementById('btn02');
+            var oSlide = document.getElementById('slide');
+
+            // 将 ul 中的 5 个 li 复制一份，成为10个 li
+            oList.innerHTML = oList.innerHTML+oList.innerHTML;
+
+            // 声明变量用来标记每次修改的值
+            var iLeft = 0;
+
+            // 声明变量用来存储每次的增量值，当点击按钮时修改它的值做正负交替便实现了左右移动的效果
+            var iSpeed = -3;
+
+            // 定义一个变量来存储 iSpeed 停止前的上一次的值
+            var iLastSpeed = -3;
+
+            // 重复定时器不断执行 fnMove 函数
+            var timer = setInterval(fnMove, 30);
+
+            function fnMove() {
+                // 修改标记每次修改的值
+                iLeft += iSpeed;
+
+                // 判断 iLeft 的值如果小于 -1000 说明向左滚动完毕，需要迅速将图片复原到原位置，然后重新向左移动
+                if (iLeft < -1000) {
+                    iLeft = 0;
+                };
+                // // 判断 iLeft 的值如果大于 0 说明向左滚动完毕，需要迅速将图片复原到原位置，然后继续向右移动
+                if (iLeft > 0){
+                    iLeft=-1000;
+                };
+
+                // 不断修改 ul 标签的 left 属性实现移动效果
+                oList.style.left = iLeft+'px';
+            };
+
+            // 点击按钮修改存储增量值的变量，负数表示向左移动，正数表示向右移动
+            oLeftBtn.onclick=function(){
+                iSpeed=-3;
+            };
+            oRightBtn.onclick=function(){
+                iSpeed=3;
+            };
+
+            // 当鼠标移入黑框时停止移动
+            oSlide.onmouseover=function(){
+                // 方式一：关闭定时器
+                // clearInterval(timer);
+                
+                // 方式二：修改增量值变量为 0，每次增长为 0 也就不移动了,注意修改前将增量值先保存以便鼠标移开时继续上次停止的位置继续移动
+                iLastSpeed = iSpeed;
+                iSpeed = 0;
+            };
+
+            // 鼠标移出黑框时开始移动
+            oSlide.onmouseout = function() {
+                // 方式一：重启定时器
+                // timer = setInterval(fnMove, 30);
+                
+                // 方式二：将增量值修改回去就会再次移动
+                iSpeed = iLastSpeed;
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="btns_con">
+        <div class="left" id="btn01">&lt;</div>
+        <div class="right" id="btn02">&gt;</div>
+    </div>
+    <div class="list_con" id="slide">
+        <ul id="list">
+             <li>
+                <a href="">
+                    <img src="images/shui01.png" alt="商品图片">
+                </a>
+            </li>
+             <li>
+                <a href="">
+                    <img src="images/shui02.png" alt="商品图片">
+                </a>
+            </li>
+             <li>
+                <a href="">
+                    <img src="images/shui03.png" alt="商品图片">
+                </a>
+            </li>
+             <li>
+                <a href="">
+                    <img src="images/shui04.png" alt="商品图片">
+                </a>
+            </li>
+             <li>
+                <a href="">
+                    <img src="images/shui05.png" alt="商品图片">
+                </a>
+            </li>
+         </ul> 
+    </div>
+</body>
+</html>

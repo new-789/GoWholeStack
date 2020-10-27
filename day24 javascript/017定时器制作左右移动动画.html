@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 200px;
+            height: 200px;
+            background: gold;
+            position: fixed;
+            top: 100px;
+            left: 0;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            // 获取元素
+            var oBox = document.getElementById('box');
+
+            var iLeft = 0;
+            var iSpeed = 3;
+
+            var timer01 = setInterval(fnMove, 20);
+
+            function fnMove(){
+                iLeft += iSpeed;
+                oBox.style.left=iLeft+'px';
+                // 到一定位置左移
+                if(iLeft > 800){
+                    iSpeed = -3;
+                };
+                // 到 0 的位置右移
+                if (iLeft <= 0){
+                    iSpeed = 3;
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="box" id="box"></div>
+</body>
+</html>

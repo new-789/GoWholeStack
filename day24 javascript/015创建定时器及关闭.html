@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function fnMyalert() {
+            alert('起床了！');
+        }
+
+        // 创建只执行一次的定时器，参数一为需要执行的函数名，参数二为间隔的时间(毫秒)
+        var timer01 = setTimeout(fnMyalert, 2000);
+        // 关闭只执行一次的定时器
+        clearTimeout(timer01);
+
+
+        // 创建反复执行的定时器
+        var timer02 = setInterval(fnMyalert, 3000);
+        // 关闭反复执行的定时器
+        clearInterval(timer02);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

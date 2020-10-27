@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 当整个页面加载完之后，再继续执行大括号里面的代码
+        window.onload = function(){
+            var oDiv = document.getElementById('div01');
+            oDiv.style.color='blue';
+            oDiv.style.width='300px';
+            oDiv.style.height='300px';
+            oDiv.style.background='gold';
+        }
+    </script>
+</head>
+<body>
+    <div id="div01">这是一个 div 元素</div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 函数调用, 函数在下面定义，在上面调用，这种特性叫做函数的预解析
+        fnMyalert();
+
+        // 变量在下面定义，在上面调用，变量的值是 undefined ,这叫变量的预解析
+        alert(iNum);
+
+        // 定义函数
+        function fnMyalert() {
+            alert('hello function!');
+        }
+
+        var iNum = 12;
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en/zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/skin01.css" id="link01">
+    <script>
+        window.onload = function () {
+            // 获取元素属性
+            var oBtn01 = document.getElementById('btn01');
+            var oBtn02 = document.getElementById('btn02');
+            var oLink = document.getElementById('link01');
+
+            // 点击事件修改 link 标签的 href 属性值
+            oBtn01.onclick=function() {
+                oLink.href='css/skin01.css';
+            };
+            oBtn02.onclick=function() {
+                oLink.href='css/skin02.css';
+            };
+        }
+    </script>
+</head>
+<body>
+    <h1>网页内容</h1>
+    <input type="button" value="皮肤一" id="btn01">
+    <input type="button" value="皮肤二" id="btn02">
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 定义全局变量
+        var iNum1 = 12;
+
+        function fnMyAlert(){
+            // 定义局部变量
+            var iNum2 = 24;
+            // 函数内部调用全局变量
+            alert(iNum1);
+            // 函数内部调用局部变量
+            alert(iNum2);
+            // 在函数内部修改全局变量的值
+            iNum1=13;
+            alert(iNum1);
+
+            // 在函数内部如果不用 var 关键字来定义变量，那么该变量就会变成全局变量
+            iNum3=32;
+        }
+
+        fnMyAlert();
+
+        alert('函数外调用 iNum1 值为：'+iNum1);
+
+        alert('函数外调用 iNum3 值为：'+iNum3);
+        alert('函数外部调用 iNum2'+iNum2);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

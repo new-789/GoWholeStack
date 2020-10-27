@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .sty01{
+            color: red;
+            font-size: 20px;
+        }
+        .sty02{
+            color: blue;
+            font-size: 30px;
+            text-decoration: none;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            // 获取页面元素
+            var oDiv = document.getElementById('div02');
+            var oA = document.getElementById('link01');
+
+            // 读取属性值
+            var sId = oDiv.id;
+            // alert(sId);
+
+            // 写属性值，也叫作设置属性值
+            oDiv.style.color='red';
+            // 属性名称带“-”的，要写成驼峰式
+            oDiv.style.fontSize='30px';
+            
+            // 设置 class 属性值，class 属性名称需要写成 className
+            oA.className='sty02';
+
+            // 操作元素中包裹的内容
+            // 读取包裹的内容
+            var sInfo = oDiv.innerHTML;
+            alert(sInfo);
+
+            // 改写元素包裹的内容
+            oDiv.innerHTML = `改变后的文字`;
+            // 插入标签元素
+            oDiv.innerHTML = `<a href="https://www.baidu.com/">百度</a>`;
+            oDiv.innerHTML = `<ul>
+                                <li>列表文字1</li>
+                                <li>列表文字2</li>
+                                <li>列表文字3</li>
+                              </ul>`;
+        }
+    </script>
+</head>
+<body>
+    <div id="div02">这是一个 div</div>
+    <a href="#" class="sty01" id="link01">这是一个链接</a>
+</body>
+</html>

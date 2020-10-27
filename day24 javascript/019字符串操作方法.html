@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var iNum1 = 12;
+        var iNum2 = 12.32;
+        var sNum1 = '12';
+        var sNum2 = '12.32';
+
+        // “+” 符号运算，如果符号两边都是数字就做加法运算，如果有一边是字符串就做字符串拼接
+        // alert(iNum1+10);  // 运算结果：22
+        // alert(sNum1+10);  // 拼接结果：1210
+
+        // 将整数的字符串转换为整数用 parseInt() 方法，如果是小数字符串会抹去小数部分
+        // alert(parseInt(sNum1) + 20);  // 运算结果：32
+        // alert(parseInt(sNum2) + 20);  // 运算结果：32
+
+        // 将小数的字符串转换为小数，用 parseFloat() 方法
+        // alert(parseFloat(sNum2) + 20);  // 运算结果：32.32
+
+        // 将字符串分隔成数组
+        var sTr = '2002-10-20';
+        var aList = sTr.split('-');
+        var aList2 = sTr.split('');
+        // alert(aList);
+        // alert(aList2);
+
+        // 获取某小段字符在大段字符中第一次出现的索引值
+        var sTr2 = 'abcdef12345ghijkf1lmn';
+        var iPos = sTr2.indexOf('f1');
+        var iPos2 = sTr2.indexOf('i1');
+        // alert(iPos);
+        // alert(iPos2);
+
+        // 字符串切片
+        var sTr3 = sTr2.substring(6,11);
+        // 写一个参数表示从当前位置截取到结尾，截取从索引 6 开始到结尾
+        var sTr4 = sTr2.substring(6);
+        // alert(sTr3);
+        // alert(sTr4);
+        
+        // 字符串反转
+        var sTr5 = sTr2.split("").reverse().join('');
+        alert(sTr5);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

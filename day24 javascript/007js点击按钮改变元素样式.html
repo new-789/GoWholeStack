@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.onload = function() {
+            // 获取元素属性
+            var oBtn = document.getElementById('btn');
+            var oDiv = document.getElementById('div01');
+
+            function fnChange() {
+                oDiv.style.width="300px";
+                oDiv.style.height="100px";
+                oDiv.style.background = 'gold';
+                oDiv.style.color = 'white';
+                oDiv.style.fontSize='30px';
+                oDiv.style.marginTop= '15px';
+                oDiv.style.margin = '0 auto';
+            };
+            oBtn.onclick = fnChange;
+
+            // 将鼠标点击事件绑定一个匿名函数实现事件触发
+            oBtn.onclick = function() {
+                oDiv.style.width="300px";
+                oDiv.style.height="100px";
+                oDiv.style.background = 'gold';
+                oDiv.style.color = 'white';
+                oDiv.style.fontSize='30px';
+                oDiv.style.marginTop= '15px';
+                oDiv.style.margin = '0 auto';
+            };
+        }
+    </script>
+</head>
+<body>
+    <input type="button" value="改变div样式" id="btn">
+    <div id="div01">这是一个 div</div>
+</body>
+</html>

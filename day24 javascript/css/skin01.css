@@ -1,0 +1,14 @@
+body{
+    background: #ddd;
+}
+
+input{
+    width: 200px;
+    height: 50px;
+    background: pink;
+    /* 设置按钮圆角 */
+    border-radius: 25px;
+    border: 0; 
+    /* 去除 input 标签外边框 */
+    outline: none;
+}
