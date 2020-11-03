@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <style>
+        .red{
+            color:red;
+        }
+        .big{
+            font-size: 30px;
+        }
+        .noline{
+            text-decoration: none;
+        }
+    </style>
+    <script>
+        $(function(){
+            var $div = $('#div01');
+            var $div2 = $('div');
+            var $a = $('#link01');
+
+            // 读取样式属性值
+            var sSize = $div.css('fontSize');
+            // alert(sSize);  // 弹出 16px
+            
+            // 写样式属性：也叫作设置样式属性
+            $div.css('color','red');
+            $div.css({'fontSize':30, 'fontWeight': 'bold'});
+
+            // 读取多个元素的样式属性值，得到的是第一个元素的值
+            var sSize2 = $div2.css('fontSize');
+            // alert(sSize2);
+
+            // 操作样式类名
+            // 添加类名
+            $a.addClass('red');
+            $a.addClass('big');
+            $a.addClass('noline');
+            // 删除类名
+            $a.removeClass('red');
+            $a.removeClass('noline');
+        });
+    </script>
+</head>
+<body>
+    <div id="div01">这是一个 div</div>
+    <div>这是第二个 div</div>
+    <a href="#" id="link01">这是一个链接</a>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 200px;
+            height: 200px;
+            background: gold;
+            display: none;
+        }
+    </style>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+            // 获取元素对象
+            var $btn = $('#btn');
+            var $box = $('.box');
+
+            // 绑定按钮点击事件
+            $btn.click(function(){
+                // 元素的 show 显示 和 hide隐藏效果
+                // $box.hide();
+                // $box.show();
+
+                // toggle() 切换元素的显示和隐藏 
+                // $box.toggle();
+
+                // fadeIn 和 fadeOut 元素淡入淡出效果
+                // $box.fadeIn();
+                // $box.fadeOut();
+                
+                // fadeToggle() 切换元素的淡入和淡出交替结果
+                // $box.fadeToggle();
+                
+                // slideUp() 和 slideDown() 向上卷起和向下卷起特效
+                // $box.slideUp();
+                // $box.slideDown();
+
+                // slideToggle() 不断切换向上和向下卷起特效
+                $box.stop().slideToggle();
+            })
+        })
+    </script>
+</head>
+<body>
+    <input type="button" value="动画" id="btn">
+    <div class="box"></div>
+</body>
+</html>

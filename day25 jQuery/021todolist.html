@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .list_con{
+            width: 600px;
+            margin: 50px auto 0;
+        }
+        .list_con h2{
+            text-align: center;
+        }
+        .inputtxt{
+            width: 550px;
+            height: 30px;
+            border: 1px solid #ccc;
+            padding: 0px;
+            text-indent: 10px;
+        }
+        .inputbtn{
+            width: 40px;
+            height: 32px;
+            padding: 0;
+            border: 1px solid #ccc;
+        }
+        .list{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            margin-top: 20px;
+        }
+        .list li{
+            height: 40px;
+            line-height: 40px;
+            border-bottom: 1px solid #ccc;
+        }
+        .list li span{
+            float: left;
+        }
+        .list li a{
+            float: right;
+            font-size: 15px;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+    </style>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+            var $txt = $('#text1');
+            var $btn = $('#btn1');
+            var $list = $('#list');
+            // 绑定按钮点击事件，添加功能实现
+            $btn.click(function(){
+                // 获取输入框中的内容
+                var sVal = $txt.val();
+                // 清空输入框的内容,防止重复添加
+                $txt.val('');
+                // 判断输入框是否为空
+                if (sVal == ''){
+                    alert('输入框不允许为空,请重新输入！');
+                    return;
+                };
+
+                // 拼接需要新增的标签
+                var $li = $('<li><span>'+sVal+'</span><a href="javascript:;" class="up">↑</a><a href="javascript:;" class="down">↓</a><a href="javascript:;" class="del">删除</a></li>');
+                // 将新增的标签添加到 ul 标签里面的后面
+                $list.append($li);  // 等同于 $li.appendTo($list)
+
+                // 给新增的li 标签绑定删除事件，否则无法实现删除
+                /*
+                    var $del2 = $li.find('.del');
+                    $del2.click(function(){
+                        $(this).parent().remove();
+                    });
+                */
+            });
+
+            // 删除功能实现
+            /*
+                var $del = $('.del');
+                $del.click(function(){
+                    // 选择父级即 li 标签然后并删除
+                    $(this).parent().remove();
+                });
+            */
+           
+           // 上面的写法太复杂(三个事件分别要写三个方法)，而且性能不高，可以改写成事件委托的写法
+           $list.delegate('a', 'click', function(){
+                // 获取 a 标签 class 的属性值
+                var sTr = $(this).prop('class');
+                
+                // 判断 a 标签的 class 值，并根据不同的值做出不同的操作
+                // 删除操作
+                if (sTr == 'del'){
+                    // 删除操作
+                    $(this).parent().remove();
+                // 上移操作
+                }else if(sTr == 'up'){
+                    // 判断是否是第一条，如果是第一条则说明已经移到顶了
+                    if ($(this).parent().prev().length == 0){
+                        alert('已经移到顶了，不能再继续往上移了哦！');
+                        return;
+                    }else{
+                        // 向上移动
+                        $(this).parent().insertBefore($(this).parent().prev());
+                    };
+                // 下移操作
+                }else if(sTr == 'down'){
+                    if ($(this).parent().next().length == 0){
+                        alert('已经移到低了，不能再继续往下移了哦！');
+                        return;
+                    }else{
+                    // 向下移动
+                        $(this).parent().insertAfter($(this).parent().next());
+                    };
+                };
+           });
+        })
+    </script>
+</head>
+<body>
+    <div class="list_con">
+        <h2>To do list</h2>
+        <input type="text" name="" id="text1" class="inputtxt">
+        <input type="button" name="" value="添加" id="btn1" class="">
+        <ul id="list" class="list">
+            <li>
+                <span>学习 html</span>
+                <a href="javascript:;" class="up">↑</a>
+                <a href="javascript:;" class="down">↓</a>
+                <a href="javascript:;" class="del">删除</a>
+            </li>
+            <li>
+                <span>学习 CSS</span>
+                <a href="javascript:;" class="up">↑</a>
+                <a href="javascript:;" class="down">↓</a>
+                <a href="javascript:;" class="del">删除</a>
+            </li>
+            <li>
+                <span>学习 javascript</span>
+                <a href="javascript:;" class="up">↑</a>
+                <a href="javascript:;" class="down">↓</a>
+                <a href="javascript:;" class="del">删除</a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

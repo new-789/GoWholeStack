@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .grandfather{
+            width: 300px;
+            height: 300px;
+            background: purple;
+        }
+        .father{
+            width: 200px;
+            height: 200px;
+            background: gold;
+            position: relative;
+        }
+        .son{
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            top: 400px;
+            left: 0;
+        }
+    </style>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+            // var $son = $('.son');
+            // 由于事件冒泡的原因，在该元素上点击 click 事件会连续触发它的所有父级层级的 click 同名事件
+            $('.son').click(function(){
+                alert(1);
+
+                // 阻止事件冒泡的简略写法
+                return false;
+            });
+
+            // 父级阻止事件冒泡，阻止事件冒泡事件绑定的函数中需要接收一个 event 参数，表示事件对象，然后用该对象调用对应的方法即可，如下
+            $('.father').click(function(event){
+                alert(2);
+                // 阻止事件冒泡：在该层阻止事件冒泡完整写法
+                event.stopPropagation();
+
+            });
+
+            $('.grandfather').click(function(){
+                alert(3);
+            });
+
+            // document 代表最顶级标签
+            $(document).click(function(){
+                alert('最顶层标签');
+            });
+        })
+    </script>
+</head>
+<body>
+    <div class="grandfather">
+        <div class="father">
+            <div class="son"></div>
+        </div>
+    </div>
+</body>
+</html>

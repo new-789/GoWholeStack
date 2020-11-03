@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type='text/javascript' src='js/jquery-1.12.4.min.js'></script>
+    <script>
+        $(function(){
+            // has 过滤器，选择包含 span 标签的 div
+            var $div = $('div').has('span');
+            $div.css({'color':'red','textIndent':24});
+
+            // not 过滤器，选择 class 不是 box2 的 div
+            var $div2 = $('div').not('.box2');
+            $div2.css({'textDecoration':'underline'});
+
+            // eq 过滤器，选择第三个 li 元素
+            var $li = $('li').eq(2);
+            $li.css({'listStyle':'none'});
+        });
+    </script>
+</head>
+<body>
+    <div class="box">这是一个 div</div>
+    <div class="box">这是第二个<span>div</span></div>
+    <div class="box2">这是第三个 div</div>
+    <ul>
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+    </ul>
+</body>
+</html>

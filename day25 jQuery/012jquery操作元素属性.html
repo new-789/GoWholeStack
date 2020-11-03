@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+            var $a = $('#link01');
+
+            // 读取属性值
+            var sId = $a.prop('id');
+            alert(sId);
+
+            // 写属性值,也叫做设置属性值
+            $a.prop({'href':"https://www.baidu.com/",'title':'百度链接'});
+
+            // 读取元素包裹的内容
+            var sTR = $a.html();
+            alert(sTR);
+            // 设置元素包裹的内容
+            $a.html("百度");
+            // 给 a 标签中添加列表表情
+            $a.html(`<ul><li>列表文字</li></ul>`)
+        })
+    </script>
+</head>
+<body>
+    <a href="#" id="link01">这是一个链接</a>
+</body>
+</html>

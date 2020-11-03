@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 200px;
+            height: 200px;
+            background: gold;
+            margin: 50px auto;
+        }
+        .box2{
+            width: 100px;
+            height: 100px;
+            background: green;
+        }
+    </style>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+            var $box = $('.box');
+
+            // mouseover 绑定鼠标移入事件
+            /*
+            $box.mouseover(function(){
+                $(this).animate({'margin-top': 100});
+            });
+            */
+           
+            // mouseout 绑定鼠标移出事件
+            /*
+            $box.mouseout(function(){
+                $(this).animate({'margin-top': 50});
+            });
+            */
+
+            // 上面的移入移出事件，移到子元素中也会触发，如果不希望触发可用改成下面的形式
+            // mouseenter 绑定鼠标移入事件(阻止事件冒泡方式)
+            $box.mouseenter(function(){
+                $(this).animate({'margin-top': 150});
+            });
+
+            // mouseleave 绑定鼠标移出事件(阻止事件冒泡方式)
+            $box.mouseleave(function(){
+                $(this).animate({'margin-top':50});
+            });
+        })
+    </script>
+</head>
+<body>
+    <div class="box">
+        <div class="box2"></div>
+    </div>
+</body>
+</html>

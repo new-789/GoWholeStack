@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 200px;
+            height: 200px;
+            background: gold;
+        }
+    </style>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+            // 获取元素对象
+            var $btn = $('#btn');
+            var $box = $('.box');
+
+            // 为按钮绑定点击事件
+            $btn.click(function fnMove(){
+                //$box.css('width',1000);
+                
+                // 为盒子绑定 animate 方法,即为class 为 box 的元素设置了动画效果
+                /*
+                animate 参数说明:
+                    参数一:要做动画的样式属性,写成字典形式
+                    参数二:动画持续的事件,默认是 400 毫秒
+                    参数三:动画曲线,默认是"swing"缓冲运动(默认值),也可以设置为"linear"匀速运动,一般不设置使用默认值
+                    参数四:动画完成后的回调函数,它是一个匿名函数,在动画结束时会自动调用.
+                 */ 
+                $box.animate({"width":1000},  // 参数一
+                               2000,  // 参数二
+                               'linear',  // 参数三
+                               function(){  // 参数四
+                                    $box.animate({'marginTop':200},2000,function(){
+                                            $box.animate({'width':200,'height':200,'margin':0},2000,function(){
+                                                    // 调用事件自身形成递归,让动画一直执行
+                                                    fnMove();
+                                                });
+                                            });
+                                });
+                })
+        })
+    </script>
+</head>
+<body>
+    <input type="button" value="动画" id="btn">
+    <div class="box"></div>
+</body>
+</html>

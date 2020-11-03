@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: 'Microsoft Yahei';
+        }
+        body,ul{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        .menu{
+            width: 200px;
+            margin: 40px 0 0 20px;
+
+        }
+        .menu .level1,.menu li
+         ul a{
+            display: block;
+            width: 200px;
+            height: 30px;
+            line-height: 30px;
+            text-decoration: none;
+            background-color: #99ccff;
+            font-size: 16px;
+            text-indent: 10px;
+            color: black;
+        }
+        .menu .level1{
+            border-bottom: 1px;
+            margin-bottom: 1px;
+            border-radius: 8px;
+        }
+        .menu .level1:hover{
+            background: #ccc;
+        }
+        .menu li ul a{
+            font-size: 14px;
+            text-indent: 50px;
+            background: pink;
+            border-bottom: 0.3px solid #fff;
+            border-radius: 8px;
+        }
+        .menu li ul{
+            display: none;
+        }
+        .menu li .current{
+            display: block;
+        }
+        .menu li ul a:hover{
+            border-bottom: 1px solid blue;
+            border-left: 1px solid blue;
+            border-right: 1px solid blue;
+        }
+    </style>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+            // 获取 a 标签元素对象
+            $a = $('.level1');
+
+            $a.click(function(){
+                // $(this).next().stop().toggle();
+                
+                /*
+                    parent() 表示转移的父级标签
+                    siblings() 表示转移到下级标签
+                    children() 表示转移到同级兄弟标签
+                 */
+                $(this).next().stop().slideToggle().parent().siblings().children('ul').slideUp();
+            });
+        })
+    </script>
+</head>
+<body>
+    <ul class="menu">
+        <li>
+            <a href="#" class="level1">手机</a>
+            <ul class="current">
+                <li><a href="#">iphone x 256G</a></li>
+                <li><a href="#">红米K30s 5G</a></li>
+                <li><a href="#">HUAWEI Mate40</a></li>
+                <li><a href="#">vivo X20A 4G</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="level1">笔记本</a>
+            <ul>
+                <li><a href="#">MacBook Pro</a></li>
+                <li><a href="#">ThinkPad</a></li>
+                <li><a href="#">外星人(Alienware)</a></li>
+                <li><a href="#">惠普(HP)薄锐ENVY</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="level1">电视</a>
+            <ul>
+                <li><a href="#">海信(hisense)</a></li>
+                <li><a href="#">长虹(CHANGHONG)</a></li>
+                <li><a href="#">TCL彩电L65E5800A</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="level1">鞋子</a>
+            <ul>
+                <li><a href="#">新百伦</a></li>
+                <li><a href="#">adidas</a></li>
+                <li><a href="#">李宁</a></li>
+                <li><a href="#">特步 X</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="level1">玩具</a>
+            <ul>
+                <li><a href="#">迪迦奥特曼</a></li>
+                <li><a href="#">轨道小火车</a></li>
+                <li><a href="#">塑胶飞碟</a></li>
+                <li><a href="#">AK47玩具枪</a></li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>

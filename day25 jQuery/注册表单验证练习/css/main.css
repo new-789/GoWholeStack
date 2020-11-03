@@ -1,0 +1,68 @@
+body,div,h1,ul,li,a,p{
+    margin: 0;
+    padding: 0;
+} 
+
+ul li{
+    list-style: none;
+}
+
+.register_con{
+    width: 530px;
+    margin: 150px auto;
+}
+.register_con .l_con{
+    float: left;
+}
+.register_con .reg_slogan{
+    color: green;
+    margin-top: 10px;
+    font-size: 19px;
+    font-weight: bold;
+}
+.register_con .reg_banner{
+    height: 250px;
+    border-right: 1px solid #ccc;
+}
+
+.register_con .r_con{
+    float: right;
+}
+.r_con h1{
+    text-align: center;
+}
+.r_con a{
+    margin-left: 280px;
+    text-decoration: none;
+    color: blue;
+}
+.reg_form{
+    height: 100%;
+    margin-top: 25px;
+}
+.reg_form li{
+    height: 45px;
+}
+.reg_form li p{
+    display: none;
+    color: red;
+    font-size: 13px;
+    margin-top: 2px;
+    width: 100%;
+}
+.reg_form #user_name,#pwd,#cpwd,#email{
+    float: right;
+    background: #CCFF99;
+    width: 200px;
+    height: 19px;
+}
+.reg_form .reg_sub{
+    width: 100%;
+    height: 40px;
+}
+.reg_form .reg_sub input{
+    width: 250px;
+    height: 40px;
+    background: #33CC33;
+    margin-left: 60px;
+}

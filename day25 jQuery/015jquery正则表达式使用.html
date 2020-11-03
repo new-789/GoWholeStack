@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 定义正则表达式，参数 i 表示忽略大小写
+        var reTest01 = /a/;
+        var reTest02 = /a/i;
+        var reTest03 = /\d+/;
+        var reTest04 = /^\d+$/;
+
+        var sTr01 = 'abc';
+        var sTr02 = 'ABC';
+        var sTr03 = '123456';
+        var sTr04 = '123456abcdef';
+
+        // alert(reTest01.test(sTr01));
+        // alert(reTest02.test(sTr02));
+        // alert(reTest03.test(sTr03));
+        // alert(reTest03.test(sTr04));
+        alert(reTest04.test(sTr03));
+        alert(reTest04.test(sTr04));
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

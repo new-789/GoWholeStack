@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+            $('#btn01').click(function(){
+                $('#pop').show();
+                // 安你会阻止 click 的事件冒泡
+                return false;
+            });
+            $('#shutoff').click(function(){
+                $('#pop').hide();
+            });
+            // 点击弹框其它地方，关闭弹框
+            $(document).click(function(){
+                $('#pop').hide();
+            });
+            // 点击，弹框不应该隐藏，所以弹框也需要阻止冒泡
+            $('.pop_con').click(function(){
+                return false;
+            });
+        })
+    </script>
+</head>
+<body>
+    <input type="button" value="弹出弹框" id="btn01">
+    <div class="pop_main" id="pop">
+        <div class="pop_con">
+            <div class="pop_title">
+                <h3>系统提示</h3>
+                <a href="#" id="shutoff">x</a>
+            </div>
+            <div class="pop_detail">
+                <p class="pop_text">亲！请关注最近的优惠活动哦！</p>
+            </div>
+            <div class="pop_footer"></div>
+        </div>
+        
+        
+
+        <div class="mask"></div>
+    </div>
+</body>
+</html>

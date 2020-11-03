@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+            var $input = $('#input01');
+
+            // focus 绑定获得焦点事件
+            /*
+            $input.focus(function(){
+                alert($(this).val());
+            });
+            */
+           
+           // 在 focus 上绑定函数会反复触发，一般不这么用，focus 一般用在让元素起始就获得焦点，若想触发事件执行任务可用 click 事件代替
+           $input.focus();
+
+           // 绑定 change 事件
+           $input.change(function(){
+                console.log($(this).val());
+           });
+        })
+    </script>
+</head>
+<body>
+    <input type="text" id="input01">
+</body>
+</html>

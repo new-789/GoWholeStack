@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+
+            var $div = $('#div01');
+
+            // prev 转移到当前标签的前一个同辈标签 p 上,并设置颜色为红色
+            $div.prev().css({'color':'red'}); 
+
+            // prevAll 转移到当前标签前面的所有同辈元素，并设置缩进为 24px
+            $div.prevAll().css({'textIndent':'24px'});
+
+            // next 转移到当前标签的下一个同辈标签，并设置颜色为金色
+            $div.next().css({'color':'gold'});
+
+            // nextAll 转移到当前标签后面的所有同辈标签，并设置增加下划线
+            $div.nextAll().css({'textDecoration':'underline'});
+
+            // siblings 转移除了当前标签之外的所有其他同辈标签，并设置样式加粗
+            $div.siblings().css({'fontWeight':'bold'});
+
+            // parent 选择当前标签的父级标签，并设置背景色样式
+            $div.parent().css({'background':'#f0f0f0'});
+
+            // children 转移到当前标签下面子级的 span 标签，并设置样式为蓝色及加大字体
+            $div.children().css({'color':'blue','fontSize':'20px'});
+
+            // find 转移到当前标签子级中指定 class 为 sp02 的 span 标签，并设置样式
+            $div.find('.sp02').css({'color':'red','fontSize':'16px'});
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <h2>这是一个 h2 标题</h2>
+        <p>这是一个段落 p 标签</p>
+         <!-- 它的同辈前面标签即上面的 p 和 h2 标签，它的同辈后面标签即 h3 和 p 标签 -->
+        <div id="div01">这是一个 
+            <span>div</span>
+            <span class='sp02'>第二个 span</span>
+        </div>
+        <h3>这是一个 h3 标题</h3>
+        <p>这是第二个段落 p 标签</p>
+    </div>
+</body>
+</html>

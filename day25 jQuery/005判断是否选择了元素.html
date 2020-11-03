@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src='js/jquery-1.12.4.min.js'></script>
+    <script>
+        $(function(){
+            var $div = $('#div01');
+
+            var iLen = $div.length;
+            alert(iLen);  // 弹出1
+
+            var $li = $('li');
+            var iLen2 = $li.length;
+            alert(iLen2);  // 弹出 8
+
+            // 没有选择到元素，length 的属性值为 0
+            var $div2 = $('#div02');
+            var iLen3 = $div2.length;
+            alert(iLen3);  // 弹出 0
+
+            // 
+            var $div3 = $div.prev();
+            var iLen4 = $div3.length;
+            alert(iLen4);
+        });
+    </script>
+</head>
+<body>
+    <div id="div01">这是一个 div</div>
+    <ul>
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .tab_con{
+            width: 500px;
+            height: 350px;
+            margin: 50px auto 0;
+        }
+        .tab_btns{
+            height: 50px;
+        }
+        .tab_btns input{
+            width: 100px;
+            height: 50px;
+            background: #ddd;
+            border: 0px;
+            outline: none;
+        }
+        .tab_btns .active{
+            background: gold;
+            border-bottom: 2px solid green;
+        }
+        .tab_cons{
+            height: 300px;
+            background: gold;
+        }
+        .tab_cons div{
+            width: 300px;
+            line-height: 300px;
+            text-align: center;
+            display: none;
+            font-size: 30px;
+        }
+        .tab_cons .current{
+            display: block;
+        }
+    </style>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+            // 通过层级选择器获取 jquery 对象
+            var $btn = $('.tab_btns input');
+            var $div = $('.tab_cons div');
+
+            $btn.click(function(){
+                // 为当前点击按钮添加 active 类,并删除其他兄弟按钮的 active 类
+                $(this).addClass('active').siblings().removeClass('active');
+                // 获取当前点击按钮的索引值,用来与窗口中切换的窗口 div 进行关联
+                var iNum = $(this).index();
+                // 通过索引获取到对应的 div 并添加class,并删除其他兄弟按钮的 current 类
+                $div.eq(iNum).addClass('current').siblings().removeClass('current');
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="tab_con">
+        <div class="tab_btns">
+            <!-- 设置为 active 属性表示默认选中 -->
+            <input type="button" value="按钮1" class="active">
+            <input type="button" value="按钮2">
+            <input type="button" value="按钮3">
+        </div>
+        <div class="tab_cons">
+            <!-- 设置为 current 属性表示默认选中 -->
+            <div class="current">按钮一对应的内容</div>
+            <div>按钮二对应的内容</div>
+            <div>按钮三对应的内容</div>
+        </div>
+    </div>
+</body>
+</html>

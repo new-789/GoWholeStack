@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+            // id 选择器用法
+            var $div = $('#div01');
+            // jquery 操作 style 样式方法
+            $div.css({'color':'red','font-size':'30px'});
+
+            // 类选择器用法
+            var $div2 = $('.box');
+            $div2.css({'color':'gold','fontSize':'25px'});
+
+            // 标签选择器用法
+            var $li = $('li');
+            $li.css({'background':'gold', 'listStyle':'none'});
+
+            // 层级选择器用法
+            var $span = $('.box span');
+            $span.css({'color':'red', 'fontSize':'20px', 'fontWeight':'bold'});
+
+            // 属性选择器用法
+            var $div3 = $('div[class=box2]');
+            // 设置一个样式属性，可以不写成字典的形式
+            $div3.css({'color':'pink', 'fontSize':'30px'});
+        });
+    </script>
+</head>
+<body>
+    <div id="div01">这是一个 div</div>
+    <div class="box">这是第二个 <span>div</span> </div>
+    <div class="box">这是第三个 div</div>
+    <div class="box2">这是第四个 div </div>
+    <ul>
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+        <li>列表文字</li>
+    </ul>
+</body>
+</html>

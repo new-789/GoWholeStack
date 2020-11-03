@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 定义一个 json 数据
+        var sJson = '{"name":"tom","age":18,\
+                        "hobby":["study","shopping","singing"],\
+                        "shool":{"name":"beida","location":"北京"}\
+                    }';
+        // 将 json 数据转换成 javascript 对象
+        var oJson = JSON.parse(sJson);
+
+        // 操作 json 数据中的 name 属性
+        alert('操作 json 数据中的属性：'+oJson.name);
+        // 操作 json 数据中属性为 hobby 对应的数组
+        alert('操作 json 数据中属性对应的数组：'+oJson.hobby[0]);
+        // 操作 json 数据中属性为 shool 对应的字典
+        alert('操作 json 数据中属性对应的字典：'+oJson.shool.location);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

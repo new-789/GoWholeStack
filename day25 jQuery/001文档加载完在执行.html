@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        window.onload=function(){
+            var oDiv = document.getElementById('div01');
+            alert('原生 javascript 获取的 div：'+oDiv);
+        };
+
+       /* $(document).ready(function() {
+            var $div = $('#div01');
+            alert('jquery 获取的 div：'+$div);
+        });*/
+
+        // 上面 ready 写法可以简写成下面形式
+        $(function(){
+            var $div2 = $('#div01');
+            alert('jquery 获取的 div：'+$div2);
+        });
+    </script>
+</head>
+<body>
+    <div id="div01">这是一个 div</div>
+</body>
+</html>

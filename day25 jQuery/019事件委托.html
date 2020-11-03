@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+            var $li = $('#list li');
+            var $ul = $('#list');
+            /*
+            $li.click(function(){
+                $(this).css('background', 'red');
+            });
+            */
+            
+            /* 
+            上面的写法性能不高，可以改写成下面事件委托写法
+                参数一：代理的子级
+                参数二：代理的事件
+                参数三：绑定的事件函数
+            */
+            $ul.delegate('li', 'click', function(){
+                // $(this) 谁触发事件就是谁
+                $(this).css({'background':'red'});
+            });
+        })
+    </script>
+</head>
+<body>
+    <ul id="list">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</body>
+</html>
