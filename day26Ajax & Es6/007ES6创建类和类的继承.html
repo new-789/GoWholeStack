@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 定义一个类
+        class Person{
+            // 定义构造函数
+            constructor(name,age){
+                this.name = name;
+                this.age = age;
+            }
+            // 定义方法
+            showName(){
+                alert('我的名字叫：' + this.name);
+            }
+            showAge(){
+                alert('我的年龄是：' + this.age);
+            }
+        };
+        // 通过类来实例化一个对象
+        let Andy = new Person("王杰", "60");
+        // 通过对象调用类的方法
+        // Andy.showName();
+        // Andy.showAge();
+
+
+        // 定义类继承Person类,extends 继承类关键字
+        class Student extends Person{
+            // 构造函数
+            constructor(name,age,school){
+                // 调用父类中的构造函数
+                super(name,age);
+                this.school = school;
+            }
+            // 定义方法
+            showSchool(){
+                alert('我的学校是：' + this.school);
+            }
+        };
+        // 通过 student 类实例化对象
+        let xiaomin = new Student("小明", 24, "武汉大学");
+        xiaomin.showName();
+        xiaomin.showAge();
+        xiaomin.showSchool();
+    </script>
+</head> 
+<body>
+    
+</body>
+</html>

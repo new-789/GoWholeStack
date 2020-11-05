@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let aList01 = ['a','b','c'];
+
+        // 通过 map 方法遍历数组,参数一代表数组中的每个值，参数二表示数组中数据的索引值
+        aList01.map(function(item,index){
+            alert(item+' | '+index);
+        });
+
+        // concat 会返回一个新数组
+        let aList02 = aList01.concat('d','e','f');
+        let aList03 = [1,2];
+
+        let aList04 = aList01.concat(aList03);
+
+        console.log(aList02);  // 结果：["a","b","c","d","e","f"]
+        console.log(aList04);  // 结果:["a","b","c",1,2]
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

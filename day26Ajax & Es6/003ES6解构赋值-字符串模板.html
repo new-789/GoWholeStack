@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let aList = [1,2,3];
+        // 数组解构赋值方法
+        let [a,b,c] = aList;
+        // alert(a);
+        // alert(b);
+
+
+        let person = {name:'tom',age:88};
+        // 对象结构赋值方法
+        let {name,age} = person;
+        // alert(name);
+        // alert(age);
+        
+        // 函数结构赋值和字符串模板示例
+        function fnPrintPerson({name,age}){
+            // 字符串模板方法
+            alert(
+                `我的名字叫: ${name},
+                我的年龄是: ${age}`
+                );
+        }
+        fnPrintPerson(person);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

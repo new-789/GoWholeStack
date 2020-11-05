@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let arr = [1,2,3];
+        // arr2 与 arr 指向的是同一个内存地址，并不是复制
+        let arr2 = arr;   
+        let arr3 = [];
+        // 通过循环 arr 中的每一个值，然后在添加到一个新数组实现数组的复制
+        for (var i=0;i<arr.length;i++){
+            // 给 arr3 数组中添加值方法
+            arr3.push(arr[i]);
+        };
+        // 通过扩展运算符复制数组语法，并添加一个值 4
+        let arr4 = [...arr,4];
+
+        // alert(arr);
+        // alert(arr3);
+        // alert(arr4);
+
+        // 扩展运算符在函数参数中的使用
+        function fnAdd(a,b,c){
+            alert(a+b+c);
+        };
+        // 拆一个数组，同时传给函数中的三个参数
+        fnAdd(...arr);
+
+        // 函数中定义不定参参数语法，此种方式会自动将传入的多个参数变成数组格式
+        function fnMyalert(...a){
+            console.log(a);
+        };
+        // 传递多个数值给不定参参数
+        fnMyalert(10,20,60);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

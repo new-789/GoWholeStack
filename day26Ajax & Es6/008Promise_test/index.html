@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        /*
+        $.ajax({
+            url:'js/data01.json',
+            type:'get',
+            dataType:'json',
+            success:function(dat1){
+                // console.log(dat);
+                
+                $.ajax({
+                    url:'js/data02.json',
+                    type:'get',
+                    dataType:'json',
+                    success:function(dat2){
+                        console.log([dat1,dat2]);
+                    },
+                    error:function(err){
+
+                    }
+                });
+            },
+            error:function(err){
+
+            }
+        });
+        */
+       
+       // Promise 对象执行 ajax 方法
+       let pro01 = new Promise(function(resolve, reject){
+            $.ajax({
+                url:'js/data01.json',
+                type:'get',
+                dataType:'json'
+            }).done(function(dat){
+                resolve(dat);
+            }).fail(function(err){
+                reject(err);
+            });
+       });
+       // 通过 Promise 实例化得到的对象执行 ajax 成功或失败后需要执行的操作
+       pro01.then(function(dat){
+            console.log(dat);
+       }).catch(function(err){
+            console.log(err);
+       });
+       // 简写成箭头函数语法
+       pro01.then(dat=>console.log(dat)).catch(err=>console.log(err));
+
+
+       let pro02 = new Promise(function(resolve,reject){
+            $.ajax({
+                url:'js/data02.json',
+                type:'get',
+                dataType:'json'
+            }).done(function(dat){
+                resolve(dat);
+            }).fail(function(err){
+                reject(err);
+            });
+       });
+
+       // 通过 Promise 同时调用多个 Promise 实例化的对象，实现两个 ajax 请求都成功之后在执行其他事情
+       Promise.all([pro01,pro02]).then(function(result){
+            console.log(result);
+       }).catch(function(err){
+            console.log(err);
+       });
+       // 简写成箭头函数语法
+       Promise.all([pro01,pro02]).then(result=>console.log(result)).catch(err=>console.log(err));
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

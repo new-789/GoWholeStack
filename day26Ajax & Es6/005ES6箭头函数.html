@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 常规方法定义函数
+        /*
+        function fnAdd(a,b){
+            var rs = a+b;
+            alert(rs);
+        };
+        */
+       
+       // 通过匿名函数赋值的形式定义函数
+       /*
+       let fnAdd = function(a,b){
+            var rs = a + b;
+            alert(rs);
+       }
+       */
+      
+       // 匿名函数可以改成箭头函数的形式
+        let fnAdd = (a,b)=>{
+            var rs = a+b;
+            alert(rs);
+        };
+       // fnAdd(10,5);
+      
+      /*
+      // 匿名函数接受一个参数写法
+      let fnMyalert = function(a){
+            alert(a);
+      };
+      // 匿名函数没有参数写法
+      let fnMyalert2 = function(){
+            alert('Hi');
+      };
+       */
+      
+      // 只接收一个参数的匿名函数改成箭头函数写法
+      let fnMyalert = a=>{
+            alert(a);
+      };
+      // fnMyalert("hello!");
+
+      // 没有参数的匿名函数改成箭头函数写法
+      let fnMyalert2 = ()=>{
+            alert('Hi');
+      };
+      // fnMyalert2();
+
+      // 匿名函数有返回值写法
+      /*
+      let fnReturn = function(a,b){
+            return a+b;
+      }
+      */
+     
+        // 将有返回值的匿名函数改成箭头函数写法
+        let fnReturn = (a,b)=>a+b;
+        // 箭头函数如果返回一个对象，必须给返回的对象加个括号
+        let fnReturn2 = (a,b)=>({"name":a,"age":b});
+        let iRs = fnReturn(10,5);
+        let iRs2 = fnReturn2('tom', 18);
+        // alert(iRs);
+        console.log(iRs2);
+
+
+        let person = {
+            name:'tom',
+            age:18,
+            // 对象中定义的函数方法
+            showName:function(){
+                // 定时器箭头函数语法，改成箭头函数的形式后，当前this 指的 person 对象，否则如果是一般匿名函数 this 指的是 window 对象
+                setTimeout(()=>{
+                    alert(this.name);
+                },2000)
+            }
+        }
+        person.showName();
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
