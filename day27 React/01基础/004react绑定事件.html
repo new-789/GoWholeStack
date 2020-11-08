@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        // 类方法定义组件
+        /*
+        class Helloname extends React.Component{
+            // 组件中定义事件处理方法
+            fnHello(){
+                alert('hello,My name is Tom！');
+            };
+            // 该 render 用来返回 jsx 对象
+            render(){
+                return (
+                    // 组件中事件方法使用标签属性方式，注事件属性需使用驼峰命名方式
+                    <input type="button" value="打招呼" onClick={this.fnHello} />
+                );
+            };
+        };
+        // 渲染组件
+        ReactDOM.render(
+            <Helloname />,
+            document.getElementById('root')
+        );
+        */
+       
+       // 定义一个可以传参的组件
+       class Helloname extends React.Component{
+            fnHello(){
+                alert('猴哥,My name is：'+this.props.name + '！ Are You OK?');
+            };
+
+            render(){
+                return (
+                    // 在事件调用方法是，如果方法里面使用了 this，在组件中需要使用 .bind(this) 表示将当前 this 绑定指向当前 Helloname 对象，因为 this 默认会指向这个按钮 
+                    <input type="button" value="打招呼" onClick={this.fnHello.bind(this)} />
+                );
+            };
+        };
+
+        ReactDOM.render(
+            // 调用 Helloname 组件并给 name 传参
+            <Helloname name="八戒" />,
+            document.getElementById('root')
+        );
+    </script>
+</body>
+</html>

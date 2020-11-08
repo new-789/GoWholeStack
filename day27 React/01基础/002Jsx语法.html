@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .sty01{
+            font-size: 30px;
+            color: gold;
+        }
+    </style>
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        let iNum01 = 10;
+        let sTr = 'abcd123456';
+        let ok = true;
+        let link = 'https://www.baidu.com/'
+
+        function fnReverse(s){
+            return s.split('').reverse().join('');
+        }
+
+        let el = (
+            <div>
+                <h2>jsx 语法</h2>
+                {/* jsx 里面的注释方法 */}
+
+                {/* 插入变量及运算语法 */}
+                <p>{ iNum01 + 5 }</p>
+                {/* 插入变量语法 */}
+                <p>{ sTr }</p>
+                {/* 插入js语句语法 */}
+                <p>{ sTr.split('').reverse().join('') }</p>
+                {/* 插入函数调用语法 */}
+                <p>{ fnReverse(sTr) }</p>
+                {/* 插入三元运算表达式语法 */}
+                <p>{ ok?'YES':'NO' }</p>
+                {/* jsx 属性操作方法, class 属性需要写成 className */}
+                <a href={ link } className="sty01">这是一个连接</a>
+            </div>
+        );
+
+        ReactDOM.render(
+            el,
+            document.getElementById('root')
+        );
+    </script>
+</body>
+</html>

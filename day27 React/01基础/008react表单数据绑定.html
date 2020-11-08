@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class Inputxt extends React.Component{
+            constructor(props){
+                super(props);
+                this.state={uname:"ss"};
+            };
+            // ev 指的是系统自动生产 onChange 的事件对象，用来获取 input 标签中的值一个 event 对象
+            fnChange(ev){
+                // // ev.target 指的是发生事件的元素，.value 即可获得对应 input 输入框的值
+                this.setState({uname:ev.target.value});
+            };
+
+            render(){
+                return (
+                    <div>
+                        <p>{ this.state.uname }</p>
+                        {/* input 输入框绑定 onChange 事件 */}
+                        <input type="text" value={this.state.uname} onChange={this.fnChange.bind(this)} />
+                    </div>
+                );
+            };
+        };
+
+        ReactDOM.render(<Inputxt />,document.getElementById('root'));
+    </script>
+</body>
+</html>

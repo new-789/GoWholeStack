@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title> 
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 以下 js 库负责编译 es6 语法和 jsx 语法，编译成浏览器可以识别的语法 -->
+    <script src="../js/babel.min.js"></script>
+</head>
+<body>
+    <!-- react 通常在 html 标签中只有一个id为 root 的标签，用来在 react 中选择和插入元素，而其它内容则可以和 react 写在一起，reactz 语法中即可包含 html 标签也可以包含 js 语句 -->
+    <div id="root"></div>
+    <!-- 告诉浏览器这不是一个纯  js 而是 babel 的语法 -->
+    <script type="text/babel">
+        ReactDOM.render(
+            <h1>hello world</h1>,
+            document.getElementById('root')  
+        )
+    </script>
+</body>
+</html>

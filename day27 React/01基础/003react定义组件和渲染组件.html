@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        // 通过类的方式定义组件
+        class Welcome extends React.Component{
+            render() {
+                return (
+                    // this.props.name 底层封装为 this.props={name:“Sara”}
+                    <h1>Hello, { this.props.name }</h1>
+                );
+            };
+        };
+
+        // 组件嵌套,定义一个大的组件，组合上面的 Welcome 组件
+        class WelcomeAll extends React.Component{
+            render(){
+                return (
+                    <div>
+                        <Welcome name="Sara" />
+                        <Welcome name="Tom" />
+                        <Welcome name="Rose" />
+                    </div>
+                );
+            };
+        };
+
+        // 渲染组件
+        ReactDOM.render(
+            // 调用 Welcome 组件，name 属性是用来传给组件中 props 参数对象的
+            // 渲染小组件
+            // <Welcome name="Sara" />,
+            // document.getElementById('root')
+            
+           
+           // 渲染大组件
+           <WelcomeAll />,
+           document.getElementById('root')
+        );
+    </script>
+</body>
+</html>

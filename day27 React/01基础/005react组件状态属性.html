@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class Incress extends React.Component{
+            // 构造函数，在其中初始化初始值
+            constructor(props){
+                super(props);
+                // 设置组件默认属性 state 的属性值
+                this.state ={iNum:10};
+                // 在构造函数中将 this 绑定给组件方法
+                this.fnAdd = this.fnAdd.bind(this);
+            };
+
+            fnAdd(){
+                // 通过 setState 该方法专门用来修改 state 属性的值，
+                // setState里面可以传一个对象，也可以传一个函数，函数需要返回一个对象
+                /*
+                this.setState({
+                    {iNum:prevState.iNum + 5};
+                });
+                */
+               
+               // prevState 指的是组件属性 state 最新的值
+               /*this.setState(function(prevState){
+                    return {iNum:prevState.iNum + 1};
+                });
+                */
+               
+               // 改写为箭头函数写法
+               this.setState(prevState=>(
+                    {iNum:prevState.iNum + 1}
+               ));
+            };
+
+            render(){
+                return(
+                    <div>
+                        <p>{ this.state.iNum }</p>
+                        <input type="button" value="递增" onClick={ this.fnAdd } />
+                    </div>  
+                );
+            };
+        };
+
+        ReactDOM.render(
+            <Incress />,
+            document.getElementById('root')
+        );
+    </script>
+</body>
+</html>

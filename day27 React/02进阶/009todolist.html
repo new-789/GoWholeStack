@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>todolist</title>
+	<style type="text/css">
+		.list_con{
+			width:600px;
+			margin:50px auto 0;
+		}
+		.inputtxt{
+			width:550px;
+			height:30px;
+			border:1px solid #ccc;
+			padding:0px;
+			text-indent:10px;			
+		}
+		.inputbtn{
+			width:40px;
+			height:32px;
+			padding:0px;
+			border:1px solid #ccc;
+		}
+		.list{
+			margin:0;
+			padding:0;
+			list-style:none;
+			margin-top:20px;
+		}
+		.list li{
+			height:40px;
+			line-height:40px;
+			border-bottom:1px solid #ccc;
+		}
+
+		.list li span{
+			float:left;
+		}
+
+		.list li a{
+			float:right;
+			text-decoration:none;
+			margin:0 10px;
+		}
+	</style>
+	 <script src="../js/react.development.js"></script>
+	 <script src="../js/react-dom.development.js"></script>   
+	 <script src="../js/babel.min.js"></script>		
+</head>
+<body>
+
+	<div id="root"></div>
+
+	<script type="text/babel">
+		class Todolist extends React.Component{
+			// 构造方法
+			constructor(props){
+				super(props);
+				this.state = {
+					aList:['西游记','三国演绎','红楼梦','水浒传'],
+					sTodo:''  // 属性用来存储 input 输入框中的内容
+				};
+			};
+			// 获取 input 输入框中的内容
+			fnChange(ev){
+				this.setState({sTodo:ev.target.value});
+			};
+
+			// 绑定增加事件方法，通过该方法往 aList 中增加数据
+			fnAdd(){
+				this.setState(function(prevState){
+					// 判断 sTodo 的值是否为空,为空则弹出提示框
+					if(prevState.sTodo != ''){
+						// 拼接数组, ... 表示将数组展开
+						return {aList:[...prevState.aList, prevState.sTodo],sTodo:''};
+					}else{
+						alert('请输入内容后再添加！');
+						return;
+					};
+				});
+			};
+
+			// 删除事件实现
+			fnDel(i){
+				this.setState(prevState=>{
+					// 将现有数组中的内容复制给 list 新数组
+					let list = [...prevState.aList];
+					// 删除列表中的元素，从 i 开始只删除一个内容
+					list.splice(i,1);
+					// 返回 alist 并指定它的值为修改后的 list，jsx 会对两个数组中的内容进行对比，并使用修改后的数组作为新值
+					return {aList:list};
+				});
+			};
+
+			// 上移功能实现
+			fnUp(i){
+				this.setState(prevState=>{
+					let list = [...prevState.aList];
+					// 判断是否以移到最顶层位置，是则弹出提示，否则继续移动
+					if(i == 0){
+						alert('已经是最顶层了，无法继续上移！');
+						return;
+					}else{
+						/* 将当前需要移动的内容从列表中取出来保存在一个变量，然后通过 splice 方法删除，然后在将移动的内容保存的内容到数组前一个位置完成移动操作*/
+
+						// 将需要删除的内容从数组中先保存到一个变量
+						let nowItem = list[i];  
+						list.splice(i,1);  // 从数组中删除当前元素
+						// 将需要移动的元素保存在数组的前一个位置
+						list.splice(i-1,0,nowItem);
+						return {aList:list}; // 返回修改后的数组
+					};
+				});
+			};
+
+			// 下移功能实现，原理和上移一样，只是在加入数组时在当前位置加一，即实现了下移
+			fnDown(i){
+				this.setState(prevState=>{
+					let list = [...prevState.aList];
+					// 判断是否以移到最底层位置
+					if (i >= prevState.aList.length-1){
+						alert('已经到最底层了，无法继续下移！');
+					}else{
+						let nowItem = list[i];
+						list.splice(i,1);
+						list.splice(i+1,0,nowItem);
+						return {aList:list};
+					};
+				});
+			};
+
+			render(){
+				return (
+					<div className="list_con">
+						<h2>To do list</h2>
+						<input type="text" id="txt1" className="inputtxt" value={this.state.sTodo} onChange={this.fnChange.bind(this)} />
+						<input type="button" value="增加" id="btn1" className="inputbtn" onClick={this.fnAdd.bind(this)} />
+
+						<ul className="list" id="list">
+							{/* 循环渲染列表内容渲染数据到标签 */}
+							{
+								this.state.aList.map((item,i)=>
+									<li key={ i }>
+									<span>{ item }</span>
+									<a href="javascript:;" className="del" onClick={this.fnDel.bind(this,i)}>删除</a>
+									<a href="javascript:;" className="up" onClick={this.fnUp.bind(this,i)}>↑</a>
+									<a href="javascript:;" className="down" onClick={this.fnDown.bind(this,i)}>↓</a>
+									</li>
+								)
+							}
+						</ul>
+					</div>
+				);
+			};
+		};
+
+		ReactDOM.render(<Todolist />, document.getElementById('root'));
+	</script>
+</body>
+</html>

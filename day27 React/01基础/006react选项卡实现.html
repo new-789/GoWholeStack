@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .tab_con{
+            width:500px;
+            height:350px;
+            margin:50px auto 0;
+        }
+        .tab_btns{
+            height:50px;
+        }
+        .tab_btns input{
+            width:100px;
+            height:50px;
+            background:#ddd;
+            border:0px;
+            outline:none;
+        }
+
+        .tab_btns .active{
+            background:gold;
+        }
+
+        .tab_cons{
+            height:300px;
+            background:gold;
+        }
+
+        .tab_cons div{
+            height:300px;
+            line-height:300px;
+            text-align:center;
+            display:none;
+            font-size:30px;
+        }
+
+        .tab_cons .current{
+            display:block;
+        }
+    </style>
+     <script src="../js/react.development.js"></script>
+     <script src="../js/react-dom.development.js"></script>   
+     <script src="../js/babel.min.js"></script>
+    
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class Tab extends React.Component{
+            constructor(props){
+                super(props);
+                this.state={iNow: 0};
+            };
+
+            fnChange(i){
+                this.setState({iNow:i});
+            };
+
+            render(){
+                return (
+                    <div className="tab_con">
+                        <div className="tab_btns">
+                            <input type="button" value="按钮一" className={(this.state.iNow==0)?"active":''} onClick={this.fnChange.bind(this,0)} />
+                            <input type="button" value="按钮二" className={(this.state.iNow==1)?"active":''} onClick={this.fnChange.bind(this,1)} />
+                            <input type="button" value="按钮三" className={(this.state.iNow==2)?"active":''} onClick={this.fnChange.bind(this,2)} />
+                        </div>
+                        <div className="tab_cons">
+                            {/* 实施 */}
+                            <div className={(this.state.iNow==0)?"current":''}>按钮一对应的内容</div>
+                            <div className={(this.state.iNow==1)?"current":''}>按钮二对应的内容</div>
+                            <div className={(this.state.iNow==2)?"current":''}>按钮三对应的内容</div>
+                        </div>
+                    </div>
+                );
+            };
+        };
+        
+        // 渲染组件
+        ReactDOM.render(<Tab />,document.getElementById('root'));
+    </script>
+</body>
+</html>

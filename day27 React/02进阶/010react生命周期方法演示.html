@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class Helloworld extends React.Component{
+            constructor(props){
+                super(props);
+            };
+            // 初始化组件时自动执行该方法
+            componentDidMount(){
+                console.log('componentDidMount');
+            };
+
+            // 组件销毁时自动执行该方法
+            componentWillUnmount(){
+                console.log(`componentWillUnmount`);
+            };
+
+            render(){
+                return (
+                    <h1>Hello world</h1>
+                );
+            };
+        };
+
+        ReactDOM.render(<Helloworld />, document.getElementById('root'));
+
+        // 使用定时器切换渲染的组件，让其触发 componentWillUnmount 方法
+        setTimeout(()=>{
+            ReactDOM.render(<h1>定时器切换组件</h1>,document.getElementById('root'));
+        },2000);
+    </script>
+</body>
+</html>
