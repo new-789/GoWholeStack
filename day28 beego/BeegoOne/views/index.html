@@ -1,0 +1,66 @@
+<div class="main_body" id="main_body">
+    <div class="breadcrub">
+        当前位置：文章管理>文章列表
+    </div>
+    <div class="pannel">
+        <span class="sel_label">请选择文章分类：</span>
+        <form action="/Article/ShowArticle" id="form" method="get">
+            <select name="select" id="select" class="sel_opt">
+                <option> </option>
+                {{range .articleTypes}}
+                    <!-- 
+                        对两个内容进行 if 判断比较 视图语法
+                        $.typeName 表示获取后台传递的数据
+                        .TypeName 表示获取 range 循环数组中的数据
+                    -->
+                    {{if compare $.typeName .TypeName}}
+                        <option selected="true">{{.TypeName}}</option>
+                    {{else}}
+                        <option>{{.TypeName}}</option>
+                    {{end}}
+                {{end}}
+            </select>
+            <input type="submit" hidden="hidden">
+        </form>
+
+        <table class="common_table">
+            <tr>
+                <th width="43%">文章标题</th>
+                <th width="10%">文章内容</th>
+                <th width="16%">添加时间</th>
+                <th width="7%">阅读量</th>
+                <th width="7%">删除</th>
+                <th width="7%">编辑</th>
+                <th width="10%">文章类型</th>
+            </tr>
+            <!-- 视图循环数组语法 -->
+            {{range $index,$val := .articles}}
+                <tr>
+                    <td>{{$val.Title}}</td>
+                    <td><a href="/Article/ArticleContent/?id={{$val.Id}}">查看详情</a></td>
+                    <td>{{$val.Time}}</td>
+                    <td>{{$val.Count}}</td>
+                    <td><a href="/Article/DeleteArticle/?id={{$val.Id}}" class="dels">删除</a></td>
+                    <td><a href="/Article/EditArticle/?id={{$val.Id}}">编辑</a></td>
+                    <td>{{$val.ArticleType.TypeName}}</td>
+                </tr>
+            {{end}}
+        </table>
+
+        <ul class="pagenation">
+            <li><a href="/Article/ShowArticle?pageIndex=1">首页</a></li>
+            {{if compare .FirstPage true}}
+                <li><em>上一页</em> </li>
+            {{else}}
+                <li><a href="/Article/ShowArticle?pageIndex={{.pageIndex | UpPage}}&select={{.typeName}}">上一页 </a> </li>
+            {{end}}
+            {{if compare .endPage true}}
+                <li><em>下一页</em> </li>
+            {{else}}
+                <li> <a href="/Article/ShowArticle?pageIndex={{.pageIndex | DownPage}}&select={{.typeName}}">下一页</a></li>
+            {{end}}
+            <li><a href="/Article/ShowArticle?pageIndex={{.countPage}}">末页</a></li>
+            <li>共 <span style="color:blue;">{{.count}}</span> 条记录/共 <span style="color:teal;">{{.countPage}}</span> 页/当前 <span style="color:tomato;">{{.pageIndex}}</span> 页</li>
+        </ul>
+    </div>
+</div>
