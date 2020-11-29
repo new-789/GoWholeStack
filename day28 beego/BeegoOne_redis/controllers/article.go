@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/astaxie/beego/utils"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/gomodule/redigo/redis"
@@ -464,4 +466,28 @@ func (this *ArticleController) DelArticleType() {
 	}
 	// 删除成功后跳转到类型页面
 	this.Redirect("/Article/AddArticleType", 302)
+}
+
+// 发送邮件功能
+func (this *ArticleController) SendMail() {
+	// 定义邮件的配置信息
+	config := `{"username":"2314574867@qq.com",
+				"password":"zagljrwdiggmdjgi",
+				"host":"smtp.qq.com",
+				"port":587
+				}`
+	// 获取邮箱实体
+	email := utils.NewEMail(config)
+	// 设置发送邮件的地址
+	email.From = "2314574867@qq.com"
+	// 设置邮件接收地址,值为字符串切片格式，切片中可以写多个接收地址用来群发
+	email.To = []string{"zhuxiujian@foxmail.com"}
+	// 设置邮件标题
+	email.Subject = "某某操作系统激活账号邮件"
+	// 设置邮件内容
+	email.Text = "http://192.168.8.100:8086/active?id=1"
+	// 设置以 html 渲染的内容,注：设置了 HTML 后会覆盖掉 Text 设置的邮件内容
+	email.HTML = `<h1>特别提示</ht><p><a href="192.168.8.100:8086/active?id=1">点击链接激活账号：192.168.8.100:8086/active?id=1</a></p>`
+	email.Send() // 发送邮件
+	this.Ctx.WriteString("发送邮件成功")
 }

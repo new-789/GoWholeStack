@@ -30,6 +30,8 @@ func init() {
 	beego.Router("/Article/AddArticleType", &controllers.ArticleController{}, "get:ShowAddType;post:AddType")
 	// 删除文章类型路由
 	beego.Router("/Article//DelType", &controllers.ArticleController{}, "get:DelArticleType")
+	// 发送邮件功能路由
+	beego.Router("/sendEmail", &controllers.ArticleController{}, "get:SendMail")
 }
 
 // 过滤器函数执行的自定义函数
