@@ -113,12 +113,12 @@ func (this *ArticleController) ShowArticleList() {
 	}
 	// 从 redis 中读取数据
 	rel, _ := redis.Bytes(conn.Do("get", "articleTypes"))
-    /*
-        	if err != nil {
-        		beego.Info("获取 redis 数据失败", err)
-        		return
-        	}
-    */
+	/*
+		if err != nil {
+			beego.Info("获取 redis 数据失败", err)
+			return
+		}
+	*/
 	// 由于存入 redis 的是序列化为字节类型数据，所以在读取出来之后需要进行解码操作
 	dec := gob.NewDecoder(bytes.NewReader(rel))
 	dec.Decode(&articleTypes)
@@ -473,17 +473,17 @@ func (this *ArticleController) DelArticleType() {
 // 发送邮件功能
 func (this *ArticleController) SendMail() {
 	// 定义邮件的配置信息
-	config := `{"username":"2314574867@qq.com",
-				"password":"oeqqcmqggieleaig",
+	config := `{"username":"yourMail@explame.com",
+				"password":"zagljrwdiggmdjgi",
 				"host":"smtp.qq.com",
 				"port":587
 				}`
 	// 获取邮箱实体
 	email := utils.NewEMail(config)
 	// 设置发送邮件的地址
-	email.From = "2314574867@qq.com"
+	email.From = "Mail@explame.com"
 	// 设置邮件接收地址,值为字符串切片格式，切片中可以写多个接收地址用来群发
-	email.To = []string{"zhuxiujian@foxmail.com"}
+	email.To = []string{"xxxxx@xxx.xx"}
 	// 设置邮件标题
 	email.Subject = "某某操作系统激活账号邮件"
 	// 设置邮件内容
