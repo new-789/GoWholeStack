@@ -1,0 +1,45 @@
+
+<div class="main_body" id="main_body">
+    <div class="breadcrub">
+        当前位置：文章管理>添加分类
+    </div>
+    <div class="pannel">
+        <table class="common_table">
+            <tr>
+                <th width="10%">id</th>
+                <th width="50%">类别名称</th>
+                <th width="20%">详情</th>
+                <th width="20%">管理操作</th>
+            </tr>
+            {{range .ArticleTypes}}
+                <tr>
+                    <td>{{.Id}}</td>
+                    <td>{{.Name}}</td>
+                    <td><a href="/ShowTypeContent">查看详情</a></td>
+                    <td><a href="/Article//DelType?id={{.Id}}" class="edit">删除</a></td>
+                </tr>
+            {{end}}
+        </table>
+        <div class="pannel">
+            <form method="post" action="/Article/AddArticleType" enctype="multipart/form-data">
+                <h3 class="review_title">添加商品类型</h3>
+                <div class="form_group">
+                    <label>商品类型名称：</label>
+                    <input type="text" class="input_txt2" name="typeName">
+                </div>
+                <div class="form_group">
+                    <label>商品类型logo：</label>
+                    <input type="file" class="input_file" name="uploadlogo">
+                </div>
+                <div class="form_group">
+                    <label>商品类型图片：</label>
+                    <input type="file" class="input_file" name="uploadTypeImage">
+                </div>
+                <div class="form_group indent_group line_top">
+                    <input type="submit" value="添 加" class="confirm">
+                    <span>{{.errmsg}}</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
