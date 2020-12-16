@@ -92,7 +92,7 @@ func (this *ArticleController) ShowArticleList() {
 		if pageIndex == 1 {
 			FirstPage = true
 		}
-		if pageIndex == int(math.Ceil(CountPage)) {
+		if pageIndex == int(math.Ceil(CountPage)) || int(math.Ceil(CountPage)) < pageIndex {
 			EndPage = true
 		}
 		// 用浮点数相除为了避免出现无法整除半页的情况

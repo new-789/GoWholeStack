@@ -79,7 +79,7 @@ func (this *ArticleController) ShowArticleList() {
 		if pageIndex == 1 {
 			FirstPage = true
 		}
-		if pageIndex == int(math.Ceil(CountPage)) {
+		if int(math.Ceil(CountPage)) <= pageIndex {
 			EndPage = true
 		}
 		// 当没有传递起始页时表示进入了首页,此时查询所有数据进行显示
@@ -112,11 +112,13 @@ func (this *ArticleController) ShowArticleList() {
 		beego.Info("链接 redis 数据库错误", err)
 	}
 	// 从 redis 中读取数据
-	rel, err := redis.Bytes(conn.Do("get", "articleTypes"))
-	if err != nil {
-		beego.Info("获取 redis 数据失败", err)
-		return
-	}
+	rel, _ := redis.Bytes(conn.Do("get", "articleTypes"))
+    /*
+        	if err != nil {
+        		beego.Info("获取 redis 数据失败", err)
+        		return
+        	}
+    */
 	// 由于存入 redis 的是序列化为字节类型数据，所以在读取出来之后需要进行解码操作
 	dec := gob.NewDecoder(bytes.NewReader(rel))
 	dec.Decode(&articleTypes)
@@ -472,7 +474,7 @@ func (this *ArticleController) DelArticleType() {
 func (this *ArticleController) SendMail() {
 	// 定义邮件的配置信息
 	config := `{"username":"2314574867@qq.com",
-				"password":"zagljrwdiggmdjgi",
+				"password":"oeqqcmqggieleaig",
 				"host":"smtp.qq.com",
 				"port":587
 				}`
