@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>天天鲜啤-购物车</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+</head>
+<body>
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到珠江鲜啤!</div>
+			<div class="fr">
+				{{if compare .username ""}}
+					<div class="login_btn fl">
+						<a href="/login">登录</a>
+						<span>|</span>
+						<a href="/register">注册</a>
+					</div>
+				{{else}}
+					<div class="login_btn fl">
+						欢迎您：<em>{{.username}}</em>
+						<span>|</span>
+						<a href="/user/logout">退出</a>
+					</div>
+				{{end}}
+				<div class="user_link fl">
+					<span>|</span>
+					<a href="/user/userCenterInfo">用户中心</a>
+					<span>|</span>
+					<a href="/user/Mycart">我的购物车</a>
+					<span>|</span>
+					<a href="/user/userCenterOrder">我的订单</a>
+				</div>
+			</div>
+		</div>		
+	</div>
+
+	<div class="search_bar clearfix">
+		<a href="/" class="logo fl"><img src="/static/images/logo.png"></a>
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;购物车</div>
+		<div class="search_con fr">
+			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
+			<input type="button" class="input_btn fr" name="" value="搜索">
+		</div>		
+	</div>
+
+	<div class="total_count">全部商品<em>{{.totalNum}}</em>件</div>	
+	<ul class="cart_list_th clearfix">
+		<li class="col01">商品名称</li>
+		<li class="col02">商品单位</li>
+		<li class="col03">商品价格</li>
+		<li class="col04">数量</li>
+		<li class="col05">小计</li>
+		<li class="col06">操作</li>
+	</ul>
+	<form action="/user/showOrder" method="post">
+		{{range .goods}}
+			<ul class="cart_list_td clearfix">
+				<li class="col01"><input type="checkbox" name="skuid" checked value="{{.goodsSku.Id}}"></li>
+				<li class="col02"><img src="http://192.168.8.100:8888/{{.goodsSku.Image}}"></li>
+				<li class="col03">{{.goodsSku.Name}}<br><em>{{.goodsSku.Price}}元/{{.goodsSku.Unite}}</em></li>
+				<li class="col04">{{.goodsSku.Unite}}</li>
+				<li class="col05">{{.goodsSku.Price}}元</li>
+				<li class="col06">
+					<div class="num_add">
+						<a href="javascript:;" class="add fl">+</a>
+						<input type="text" class="num_show fl" skuid="{{.goodsSku.Id}}" value="{{.num}}">	
+						<a href="javascript:;" class="minus fl">-</a>	
+					</div>
+				</li>
+				<li class="col07">{{.addPrice}}元</li>
+				<li class="col08"><a class="deleteCart" href="javascript:;" skuid="{{.goodsSku.Id}}">删除</a></li>
+			</ul>
+		{{end}}
+		<ul class="settlements">
+			<li class="col01"><input type="checkbox" name="" checked=""></li>
+			<li class="col02">全选</li>
+			<li class="col03">合计(不含运费)：<span>¥</span><em>{{.totalPrice}}</em> 元<br>共计<b>{{.totalNum}}</b>件商品</li>
+			<li class="col04"><input type="submit" value="去结算"></li>
+		</ul>
+	</form>
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+	
+</body>
+</html>
+
+<script type="text/javascript">
+	function UpdateGoodsPrice() {
+		totalCount = 0
+		totcalPrice = 0
+		$(".cart_list_td").find(":checked").parents("ul").each(function () {
+			num = $(this).find(".num_show").val()
+			price = $(this).children(".col07").text()
+			num = parseInt(num)
+			price = parseFloat(price)
+			totalCount += num
+			totcalPrice += price
+		})
+		$(".settlements").children(".col03").children("em").text(totcalPrice)
+		$(".settlements").children(".col03").children("b").text(totalCount)
+		$(".total_count").children("em").text(totalCount)
+	}
+
+	// 设置全选和全部选状态
+	$(".settlements").find(":checkbox").change(function () {
+		// 获取单选框属性的状态
+		is_checked = $(this).prop("checked")
+		$(".cart_list_td").find(":checkbox").each(function () {
+			// 设置 checked 属性的状态
+			$(this).prop("checked",is_checked)
+		})
+		UpdateGoodsPrice()
+	})
+	
+	// 设置根据单个商品的改变全选状态
+	$(".cart_list_td").find(":checked").change(function () {
+		// 获取选择框的总个数
+		checkboxLen = $(".cart_list_td").find(":checkbox").length
+		// 获取所有选择框选中的状态个数
+		checkedLen = $(".cart_list_td").find(":checked").length
+		if (checkboxLen > checkedLen) {
+			$(".settlements").find(":checkbox").prop("checked","")
+		}else {
+			$(".settlements").find(":checkbox").prop("checked", "checked")
+		}
+		UpdateGoodsPrice()
+	})
+	
+	// 添加商品数量
+	$(".add").click(function () {
+		count = $(this).next().val();
+		count = parseInt(count)+1;
+		
+		// 发送 ajax 异步请求
+		// 设置 ajax 同步或异步执行,等于 true 表示异步执行，false 则同步
+		$.ajaxSettings.async=false  
+		$.post("/user/UpdataCart",{
+			"skuid":$(this).next().attr("skuid"),
+			"count":count,
+		},function (dat) {
+			// 根据返回的 code 执行不同的操作
+			if (dat.code === 5) {
+				errUpdate = false;
+			}else{
+				errUpdate = true;
+				alert(dat.errmsg)
+			}
+		});
+		$.ajaxSettings.async = true
+		// 判断 errUpdate 标识如果为 false 则更新数量并计算小计金额
+		if (!errUpdate) {
+			$(this).next().val(count);
+			// 计算小计金额
+			price = $(this).parents("ul").children(".col05").text()
+			price = parseInt(price)
+			amount = count * price
+			$(this).parents("ul").children(".col07").text(amount.toFixed(2)+"元")
+		};
+		// 计算总金额，注意计算总金额前应先确定增加的商品是否被选中
+		isChecked = $(this).parents("ul").find(":checkbox").prop("checked");
+		if (isChecked) {
+			UpdateGoodsPrice()
+		}
+	})
+	
+	// 减少商品数量
+	$(".minus").click(function () {
+		count = $(this).prev().val()
+		count = parseInt(count)-1
+		if (count < 1) {
+			count = 1;
+			$(this).prev().val(count);
+			return;
+		};
+		$.ajaxSettings.async = false;
+		$.post("/user/UpdataCart",{
+			"count":count,
+			"skuid":$(this).prev().attr("skuid"),
+		},function (dat) {
+			if (dat.code == 5) {
+				errUpdate = false;
+			}else {
+				errUpdate = true;
+				alert(dat.errmsg);
+			}
+		});
+		$.ajaxSettings.async = true;
+		if (!errUpdate) {
+			$(this).prev().val(count)
+			// 计算小计金额
+			price = $(this).parents("ul").children(".col05").text()
+			price = parseFloat(price);
+			amount = price*count;
+			$(this).parents("ul").children(".col07").text(amount.toFixed(2)+"元");
+		}
+		isChecked = $(this).parents("ul").find(":checkbox").prop("checked");
+		if (isChecked) {
+			UpdateGoodsPrice()
+		}
+	})
+
+	// 手动输入商品数量——————还存在问题输入的内容小于0时不能返回到之前的数量
+	preCount = 1
+	// 输入框获取焦点事件
+	$(".num_show").focus(function () {
+		preCount = $(this).val();
+	});
+	// 输入框失去焦点事件
+	$(".num_show").blur(function () {
+		count = $(this).val()
+		// alert(count)
+		// 如果出入错误则让数据等于改动前的值
+		if (isNaN(count) || count.trim().length==0||parseInt(count) <= 0) {
+			count = preCount
+			// 此处尚存在问题
+			$(this).val(count) 
+			return
+		}; 
+
+		$.ajaxSettings.async = false;
+		$.post("/user/UpdataCart",{
+			"count":parseInt(count),
+			"skuid": $(this).attr("suid"),
+		},function (dat) {
+			if (dat.code == 5){
+				errUpdate = false;
+			}else {
+				errUpdate = true;
+			}
+		});
+		$.ajaxSettings.async=true;
+		if (!errUpdate) {
+			$(this).val(count)
+			// 计算小计金额
+			price = $(this).parents("ul").children(".col05").text()
+			price = parseFloat(price)
+			amount = price*parseInt(count)
+			$(this).parents("ul").children(".col07").text(amount.toFixed(2)+"元")
+		};
+		// 更新总价价格
+		isChecked = $(this).parents("ul").find(":checkbox").prop("checked")
+		if (isChecked) {
+			UpdateGoodsPrice()
+		}
+	});
+
+	// 删除商品
+	$(".deleteCart").click(function () {
+		skuid = $(this).attr("skuid")
+		//
+		$.ajaxSettings.async = false;
+		$.post("/user/deleteCart",{
+			"skuid":skuid,
+		},function (dat) {
+			if (dat.code == 5) {
+				errUpdate = false;
+			}else {
+				errUpdate = true;
+				alert(dat.errmsg);
+			};
+		});
+		$.ajaxSettings.async=true;
+		if (!errUpdate){
+			$(this).parents("ul").remove();
+		};
+		isChecked = $(this).parents("ul").find(":checkbox").prop("checked")
+		if (isChecked) {
+			UpdateGoodsPrice();
+		};
+
+	})
+</script>

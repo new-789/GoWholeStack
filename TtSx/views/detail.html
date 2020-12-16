@@ -1,0 +1,143 @@
+<div class="breadcrumb">
+	<a href="#">全部分类</a>
+	<span>></span>
+	<a href="#">新鲜水果</a>
+	<span>></span>
+	<a href="#">商品详情</a>
+</div>
+
+<div class="goods_detail_con clearfix">
+	<div class="goods_detail_pic fl"><img src="http://192.168.8.100:8888/{{.goodsSku.Image}}"></div>
+
+	<div class="goods_detail_list fr">
+		<h3>{{.goodsSku.Name}}</h3>
+		<p>{{.goodsSku.Desc}}</p>
+		<div class="prize_bar">
+			<span class="show_pirze">¥<em>{{.goodsSku.Price}}</em></span>
+			<span class="show_unit">单  位：{{.goodsSku.Unite}}</span>
+		</div>
+		<div class="goods_num clearfix">
+			<div class="num_name fl">数 量：</div>
+			<div class="num_add fl">
+				<input type="text" class="num_show fl" value="1">
+				<a href="javascript:;" class="add fr">+</a>
+				<a href="javascript:;" class="minus fr">-</a>	
+			</div> 
+		</div>
+		<div class="total">总价：<em>16.80元</em></div>
+		<div class="operate_btn">
+			<a href="javascript:;" class="buy_btn">立即购买</a>
+			<a href="javascript:;" class="add_cart" id="add_cart" skuid={{.goodsSku.Id}}>加入购物车</a>				
+		</div>
+	</div>
+</div>
+
+<div class="main_wrap clearfix">
+	<div class="l_wrap fl clearfix">
+		<div class="new_goods">
+			<h3>新品推荐</h3>
+			<ul>
+				{{range .goodsNew}}
+					<li>
+						<a href="/goodsDetail?id={{.Id}}"><img src="http://192.168.8.100:8888/{{.Image}}"></a>
+						<h4><a href="/goodsDetail?id={{.Id}}">{{.Name}}</a></h4>
+						<div class="prize">￥{{.Price}}</div>
+					</li>
+				{{end}}
+			</ul>
+		</div>
+	</div>
+
+	<div class="r_wrap fr clearfix">
+		<ul class="detail_tab clearfix">
+			<li class="active">商品介绍</li>
+			<li>评论</li>
+		</ul>
+
+		<div class="tab_content">
+			<dl>
+				<dt>商品详情：</dt>
+				<dd>{{.goodsSku.Goods.Detail}}</dd>
+			</dl>
+		</div>
+
+	</div>
+</div>
+
+<div class="add_jump"></div>
+
+<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+	UpdateGoodsPrice()
+	function UpdateGoodsPrice(params) {
+		// 获取单价和数量
+		price = $(".show_pirze").children("em").text()
+		num = $(".num_show").val()
+		pricr = parseFloat(price)
+		num = parseInt(num)
+		total = price * num
+		// 将总价更新
+		$(".total").children("em").text(total.toFixed(2)+" 元")
+	}
+	// 添加商品数量
+	$(".add").click(function () {
+		num = $(".num_show").val()
+		num = parseInt(num) + 1
+		$(".num_show").val(num)
+		UpdateGoodsPrice()
+	})
+	// 减少商品数量
+	$(".minus").click(function () {
+		num = $(".num_show").val()
+		num = parseInt(num) - 1
+		if (num === 0) {
+			num = 1
+		}
+		$(".num_show").val(num)
+		UpdateGoodsPrice()
+	})
+	// 手动输入商品数量,blur 失去焦点方法
+	$(".num_show").blur(function () {
+		num = $(this).val()
+		// 判断内容是否为数字 || 长度是否为0 || 值是否小于1
+		if (isNaN(num) || num.trim().lenth === 0 || parseInt(num) < 1) {  
+			num = 1
+		}
+		$(this).val(parseInt(num))
+		UpdateGoodsPrice()
+	})
+
+	var $add_x = $('#add_cart').offset().top;
+	var $add_y = $('#add_cart').offset().left;
+
+	var $to_x = $('#show_count').offset().top;
+	var $to_y = $('#show_count').offset().left;
+
+	$(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'});
+	$('#add_cart').click(function(){
+		//通过 attr 获取自定义属性值
+		skuid = $("#add_cart").attr("skuid");
+		num = $(".num_show").val(); 
+		// 发送 ajax 请求添加购物车
+		$.post("/user/addCart",{
+			"skuid":skuid,
+			"num":num,
+		},function (dat) {
+			if (dat.code === 5) {
+				$(".add_jump").css({ 'left': $add_y + 80, 'top': $add_x + 10, 'display': 'block' });
+				$(".add_jump").stop().animate({
+					'left': $to_y + 7,
+					'top': $to_x + 7},
+					"fast", function () {
+						$(".add_jump").fadeOut('fast',function () {
+						$('#show_count').html(dat.cartCount);
+					});
+				});
+			}else {
+				alert(dat);
+			}
+		})
+
+
+	})
+</script>
