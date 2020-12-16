@@ -8,6 +8,7 @@ import (
 	"github.com/kataras/iris/v12/sessions/sessiondb/boltdb"
 )
 
+//
 func main3007() {
 	sessionId := "MySession"
 

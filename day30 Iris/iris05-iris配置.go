@@ -8,6 +8,7 @@ import (
 	"github.com/kataras/iris/v12"
 )
 
+//
 func main3005() {
 	app := iris.New()
 	// 一、通过程序代码对应用进行全局配置
