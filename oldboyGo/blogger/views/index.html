@@ -1,0 +1,55 @@
+{{define "views/index.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>博客首页</title>
+</head>
+<body>
+  <h3>博客首页</h3>
+  <div class="blogs">
+    {{range .article_list}}
+      <li>
+        <h3 class="blogtitle"><a href="/article/detail/?article_id={{.Id}}">{{.Title}}</a></h3>
+        <div class="bloginfo">
+          <p>{{.Summary}}</p>
+        </div>
+        <div class="autor">
+          <span class="lm"><a href="/category/?category_id={{.Category.CategoryId}}" title="CSS|Html5" target="_blank" class=""></a></span>
+          <span class="dtime">{{.CreateTime}}</span>
+          <span class="viewnum">浏览 ({{.ViewCount}})</span>
+          <span class="viewnum">评论 ({{.CommentCount}})</span>
+          <span class="readmore"><a href="/article/detail/?article_id={{.Id}}">阅读原文</a></span>
+        </div>
+      </li>
+    {{end}}
+  </div>
+  <div class="sidebar">
+    <div class="about">
+      <div class="avatar"><img src="/static/images/avatar.jpg" alt=""></div>
+      <p class="abname">XXX</p>
+      <p class="abposition">Web前段设计师、网页设计</p>
+      <div class="abtext">一个80后草根站长！一致潜心研究 web 前段基数，一边工作以便积累经验，分享一些个人博客模板。</div>
+    </div>
+  </div>
+
+  <div class="cloud">
+    <h2 class="hometitle">分类云</h2>
+    <ul>
+      {{range .category_list}}
+        <a href="/category/?category_id={{.CategoryId}}">{{.CategoryName}}</a>
+      {{end}}
+    </ul>
+  </div>
+  <div class="paihang">
+    <h2 class="hometile">点击排行</h2>
+    <ul>
+      <li>
+        <b><a href="/download/div/2015-04-10/746.html" target="_blank">【活动作品】柠檬绿兔小白个人博客模板......</a></b>
+        <p><i><img src="/static/images/t02.jpg"></i>展示的是首页 html，博客首页布局格式简单，没有复杂的北京，色彩局部点缀，动态......</p>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>
+{{end}}

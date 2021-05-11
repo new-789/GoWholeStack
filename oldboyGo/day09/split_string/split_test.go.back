@@ -1,0 +1,32 @@
+package split_string
+
+import (
+	"reflect"
+	"testing"
+)
+
+func TestSplit(t *testing.T) {
+	ret := Split("babcbef", "b")         // 得到输出的结果
+	want := []string{"", "a", "c", "ef"} // 期望输出的结果
+	// s使用 reflect 反射包对比期望的结果和程序输出的结果
+	if !reflect.DeepEqual(ret, want) {
+		// 测试用例失败
+		t.Fatalf("want:%v,but got:%v\n", want, ret)
+	}
+}
+
+func TestSplit2(t *testing.T) {
+	ret := Split("a:b:c", ":")
+	want := []string{"a", "b", "c"}
+	if !reflect.DeepEqual(ret, want) {
+		t.Fatalf("want:%v, got:%v\n", want, ret)
+	}
+}
+
+func TestSplit3(t *testing.T) {
+	got := Split("abcef", "bc")
+	want := []string{"a", "ef"}
+	if !reflect.DeepEqual(got, want) {
+		t.Fatalf("want:%v, got:%v\n", want, got)
+	}
+}

@@ -1,0 +1,24 @@
+{{define "new_book.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加图书信息</title>
+</head>
+<body>
+<form action="/book/new" method="post">
+    <div>
+        <label>书名：</label>
+        <input type="text" name="title">
+    </div>
+    <div>
+        <label>价格：</label>
+        <input type="number" name="price">
+    </div>
+    <div>
+        <input type="submit" value="提交">
+    </div>
+</form>
+</body>
+</html>
+{{end}}
