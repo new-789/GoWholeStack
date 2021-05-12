@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"crypto/sha256"
 	"encoding/binary"
 	"log"
 	"time"
@@ -67,6 +66,7 @@ func NewBlock(data string, precHash []byte) *Block {
 	return block
 }
 
+/*
 // SetHash 3. 生成哈希
 func (b *Block)SetHash() {
 	// 1. 拼装数据
@@ -79,6 +79,7 @@ func (b *Block)SetHash() {
 	blockInfo = append(blockInfo, Uint64ToByte(b.Nonce)...)
 	blockInfo = append(blockInfo, b.Data...)
 	*/
+	/*
 	// 对上面冗余代码进行优化
 	tmp := [][]byte{
 		Uint64ToByte(b.Version),
@@ -95,3 +96,4 @@ func (b *Block)SetHash() {
 	hash := sha256.Sum256(blockInfo)
 	b.Hash = hash[:] // 给当前区块添加哈希值
 }
+*/
