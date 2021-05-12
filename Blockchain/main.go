@@ -56,12 +56,24 @@ func GenesisBlock() *Block {
 	return NewBlock("Go 5 期创世快", []byte{})
 }
 
-//5. 添加区块
+// AddBlock 5. 添加区块
+func (b *BlockChain)AddBlock(data string) {
+	// 获取最后一个区块作为当前区块的前区块哈希
+	lastBlock := b.blocks[len(b.blocks) - 1]
+	prevHash := lastBlock.Hash
+	// a. 创建新的区块
+	block := NewBlock(data, prevHash)
+	// b. 添加到区块链数组中
+	b.blocks = append(b.blocks, block)
+}
+
 //6. 重构代码
+
 
 func main() {
 	bc := NewBlockChain()
-	//block := NewBlock("比特币实现简单版本", []byte{})
+	bc.AddBlock("三藏收了悟空为大徒弟，并封了 5000 的大红包")
+	bc.AddBlock("三藏收了悟能为二徒弟，并封了 2500 的大红包")
 	for i, v := range bc.blocks {
 		fmt.Printf("=========> 当前区块高度：%d ================\n", i)
 		fmt.Printf("前区块哈希值：%x\n", v.PrevHash)
