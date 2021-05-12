@@ -1,7 +1,10 @@
 package main
 
 import (
+	"bytes"
 	"crypto/sha256"
+	"encoding/binary"
+	"log"
 	"time"
 )
 
@@ -32,8 +35,13 @@ type Block struct {
 
 // Uint64ToByte 辅助函数，将 uint64 转成 []byte
 func Uint64ToByte(num uint64) []byte  {
-	// TODO
-	return []byte{}
+	// 将 uint64 转换为 []byte 类型
+	var buffer bytes.Buffer
+	err := binary.Write(&buffer, binary.BigEndian, num)
+	if err != nil {
+		log.Panic(err)
+	}
+	return buffer.Bytes()
 }
 
 //NewBlock 2. 创建区块
