@@ -4,7 +4,6 @@ import (
 	"fmt"
 )
 
-
 func main() {
 	bc := NewBlockChain()
 	bc.AddBlock("三藏收了悟空为大徒弟，并封了 5000 的大红包")
