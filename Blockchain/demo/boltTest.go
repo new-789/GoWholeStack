@@ -33,7 +33,7 @@ func main() {
 
 	// 4. 操作数据库，读数据
 	db.View(func(tx *bolt.Tx) error {
-		// 打开 bucket (抽屉），如果报错会返回 nil，部位 nil 则表示打开 bucket 成功
+		// 打开 bucket (抽屉），如果报错会返回 nil，不为 nil 则表示打开 bucket 成功
 		bucket := tx.Bucket([]byte("b1"))
 		if bucket != nil {
 			// 根据 key 获取对应的数据
