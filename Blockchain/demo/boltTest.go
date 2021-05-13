@@ -1,6 +1,8 @@
 package main
 
 import (
+	"errors"
+	"fmt"
 	"github.com/boltdb/bolt"
 	"log"
 )
@@ -27,5 +29,19 @@ func main() {
 		bucket.Put([]byte("1111"), []byte("hello"))
 		bucket.Put([]byte("2222"), []byte("world"))
 		return nil
+	})
+
+	// 4. 操作数据库，读数据
+	db.View(func(tx *bolt.Tx) error {
+		// 打开 bucket (抽屉），如果报错会返回 nil，部位 nil 则表示打开 bucket 成功
+		bucket := tx.Bucket([]byte("b1"))
+		if bucket != nil {
+			// 根据 key 获取对应的数据
+			v1 := bucket.Get([]byte("1111"))
+			v2 := bucket.Get([]byte("2222"))
+			fmt.Printf("v1:%s\n", v1)
+			fmt.Printf("v2:%s\n", v2)
+		}
+		return errors.New("bucket b1 不应该为空，请检查！！！")
 	})
 }
