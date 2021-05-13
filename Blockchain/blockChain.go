@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/boltdb/bolt"
 	"log"
 )
@@ -29,7 +28,7 @@ func NewBlockChain() *BlockChain {
 	if err != nil {
 		log.Panicf("open blot DB failed, err:%v\n", err)
 	}
-	defer db.Close()
+	//defer db.Close() 此处不能关闭数据库，否则不能重复写入
 	db.Update(func(tx *bolt.Tx) error {
 		bucket := tx.Bucket([]byte(blockBucket))
 		// 返回为空则说明没有获取到了 bucket
@@ -46,10 +45,10 @@ func NewBlockChain() *BlockChain {
 			bucket.Put([]byte("LastHashKey"), genesisBlock.Hash)
 			lastHash = genesisBlock.Hash
 
-			// 测试读数据代码，一会删除
-			blockBytes := bucket.Get(genesisBlock.Hash)
-			block := DeSerialize(blockBytes)
-			fmt.Printf("blokInfo:%s\n", block)
+			// 用来测试读数据代码并反序列化功能，一会删除
+			//blockBytes := bucket.Get(genesisBlock.Hash)
+			//block := DeSerialize(blockBytes)
+			//fmt.Printf("blokInfo:%s\n", block)
 		} else {
 			// 读数据，并更新指向最后一个区块 key 的哈希值
 			lastHash = bucket.Get([]byte("LastHashKey"))
@@ -61,18 +60,28 @@ func NewBlockChain() *BlockChain {
 
 // GenesisBlock 定义一个创世快
 func GenesisBlock() *Block {
-	return NewBlock("Go 5 期创世快", []byte{})
+	return NewBlock("Golang——自娱创世快", []byte{})
 }
 
 // AddBlock 5. 添加区块
 func (b *BlockChain)AddBlock(data string) {
-	/*
 	// 获取最后一个区块作为当前区块的前区块哈希
-	lastBlock := b.blocks[len(b.blocks) - 1]
-	prevHash := lastBlock.Hash
-	// a. 创建新的区块
-	block := NewBlock(data, prevHash)
-	// b. 添加到区块链数组中
-	b.blocks = append(b.blocks, block)
-	 */
+	db := b.db         // 区块链数据库
+	lastHash := b.tail // 获取最后一个区块的哈希值
+
+	db.Update(func(tx *bolt.Tx) error {
+		bucket := tx.Bucket([]byte(blockBucket))
+		if bucket == nil {
+			log.Panic("打开 bucket 出错，不应该为空请检查")
+		}
+		// a. 创建新的区块
+		block := NewBlock(data, lastHash)
+		// b. 添加到区块链db中
+		bucket.Put(block.Hash, block.Serialize())
+		bucket.Put([]byte("LastHashKey"), block.Hash)
+
+		// c. 更新内存中的区块链，指的是把最后的小尾巴 tail 更新一下
+		b.tail = block.Hash
+		return nil
+	})
 }
