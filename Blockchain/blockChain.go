@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/boltdb/bolt"
 	"log"
 )
@@ -40,10 +41,15 @@ func NewBlockChain() *BlockChain {
 			// 创建一个创世块，并作为第一个区块添加到区块链中
 			genesisBlock := GenesisBlock()
 			// 写数据, Hash 作为 key, block 作为字节流(区块的数据)
-			bucket.Put(genesisBlock.Hash, genesisBlock.toByte())
+			bucket.Put(genesisBlock.Hash, genesisBlock.Serialize())
 			// 更新 LastHash 对应的最后一个区块的哈希到数据库，方便我们查找最后一个区块的哈希
 			bucket.Put([]byte("LastHashKey"), genesisBlock.Hash)
 			lastHash = genesisBlock.Hash
+
+			// 测试读数据代码，一会删除
+			blockBytes := bucket.Get(genesisBlock.Hash)
+			block := DeSerialize(blockBytes)
+			fmt.Printf("blokInfo:%s\n", block)
 		} else {
 			// 读数据，并更新指向最后一个区块 key 的哈希值
 			lastHash = bucket.Get([]byte("LastHashKey"))
