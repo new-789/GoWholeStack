@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// block 区块业务代码
+
 //Block 1. 定义区块链结构
 type Block struct {
 	// 1 版本号
@@ -64,6 +66,11 @@ func NewBlock(data string, precHash []byte) *Block {
 	block.Hash = hash
 	block.Nonce = nonce
 	return block
+}
+
+func (b *Block)toByte() []byte {
+	// TODO
+	return []byte{}
 }
 
 /*

@@ -21,7 +21,7 @@ type ProofOfWork struct {
 // NewProofOfWork POW 工作量证明函数
 func NewProofOfWork(block *Block) *ProofOfWork {
 	// 指定的难度值，是一个 string 类型，需要进行转换
-	targetStr := "0000f00000000000000000000000000000000000000000000000000000000000"
+	targetStr := "0000100000000000000000000000000000000000000000000000000000000000"
 	// 临时变量，目的是将上面的 string 类型的难度值转成 big.Int 类型
 	tmpInt := big.Int{}
 	// 将难度值赋值给 big.Int，指定16进制的格式
@@ -38,6 +38,7 @@ func (p *ProofOfWork)Run() ([]byte, uint64) {
 	var nonce uint64
 	b := p.block
 	var hash [32]byte
+	fmt.Println("开始挖矿。。。。。。。")
 	for {
 		// 1. 拼装数据（区块的数据，还有不断变化的随机数）
 		tmp := [][]byte{
@@ -66,7 +67,7 @@ func (p *ProofOfWork)Run() ([]byte, uint64) {
 		//func (x *Int) Cmp(y *Int) (r int) {
 		if tmpInt.Cmp(p.target) == -1 {  // big.Int 包中的数值比较方法
 			// a. 找到了，退出返回
-			fmt.Printf("挖矿成功:%x, nonce: %d\n", hash, nonce)
+			fmt.Printf("挖矿成功, hash:%x, nonce: %d\n", hash, nonce)
 			return hash[:], nonce
 		} else {
 			// b. 没找到，继续找，随机数加1
