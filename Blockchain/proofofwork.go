@@ -50,7 +50,7 @@ func (p *ProofOfWork)Run() ([]byte, uint64) {
 			Uint64ToByte(nonce),
 			b.Data,
 		}
-		// 将二维切片数字通过一维拼接起来，返回一个一维的切片
+		// 将二维切片数字通过一维切片拼接起来，返回一个一维的切片
 		blockInfo := bytes.Join(tmp, []byte(""))
 		// 2. 做哈希运算
 		hash = sha256.Sum256(blockInfo)

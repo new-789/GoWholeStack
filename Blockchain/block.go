@@ -58,7 +58,6 @@ func NewBlock(data string, precHash []byte) *Block {
 		Hash:     []byte{}, // 先填空，后面计算
 		Data:     []byte(data),
 	}
-	//block.SetHash()
 	// 创建一个 pow 对象
 	pow := NewProofOfWork(block)
 	// 查找模目标的随机数，不停的进行哈希运算

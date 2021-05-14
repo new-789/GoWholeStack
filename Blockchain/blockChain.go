@@ -44,11 +44,6 @@ func NewBlockChain() *BlockChain {
 			// 更新 LastHash 对应的最后一个区块的哈希到数据库，方便我们查找最后一个区块的哈希
 			bucket.Put([]byte("LastHashKey"), genesisBlock.Hash)
 			lastHash = genesisBlock.Hash
-
-			// 用来测试读数据代码并反序列化功能，一会删除
-			//blockBytes := bucket.Get(genesisBlock.Hash)
-			//block := DeSerialize(blockBytes)
-			//fmt.Printf("blokInfo:%s\n", block)
 		} else {
 			// 读数据，并更新指向最后一个区块 key 的哈希值
 			lastHash = bucket.Get([]byte("LastHashKey"))
@@ -80,7 +75,7 @@ func (b *BlockChain)AddBlock(data string) {
 		bucket.Put(block.Hash, block.Serialize())
 		bucket.Put([]byte("LastHashKey"), block.Hash)
 
-		// c. 更新内存中的区块链，指的是把最后的小尾巴 tail 更新一下
+		// c. 更新内存中的区块链，即将指向最后区块的区块链 tail 更新一下
 		b.tail = block.Hash
 		return nil
 	})
