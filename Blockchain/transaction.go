@@ -1,5 +1,12 @@
 package main
 
+import (
+	"bytes"
+	"crypto/sha256"
+	"encoding/gob"
+	"log"
+)
+
 // 比特币交易 Demo
 
 // Transaction 1. 定义交易结构
@@ -25,6 +32,19 @@ type TXOutput struct {
 	Value float64
 	// 锁定脚本,我们用地址模拟
 	PukKeyHash string
+}
+
+// SetHash 设置交易ID，直接将交易 Transaction 结构体进行hash 作为交易 ID
+func (tx *Transaction)SetHash() {
+	var buffer bytes.Buffer
+	encode := gob.NewEncoder(&buffer)
+	err := encode.Encode(tx)
+	if err != nil {
+		log.Panic(err)
+	}
+	data := buffer.Bytes()
+	hash := sha256.Sum256(data)
+	tx.TXID = hash[:]
 }
 
 // 2. 提供创建交易方法
