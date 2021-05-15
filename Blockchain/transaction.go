@@ -6,6 +6,7 @@ import (
 	"encoding/gob"
 	"log"
 )
+const reward = 12.5 // 挖矿奖励
 
 // 比特币交易 Demo
 
@@ -31,7 +32,7 @@ type TXOutput struct {
 	// 转账金额
 	Value float64
 	// 锁定脚本,我们用地址模拟
-	PukKeyHash string
+	PubKeyHash string
 }
 
 // SetHash 设置交易ID，直接将交易 Transaction 结构体进行hash 作为交易 ID
@@ -47,6 +48,22 @@ func (tx *Transaction)SetHash() {
 	tx.TXID = hash[:]
 }
 
-// 2. 提供创建交易方法
+// NewCoinbaseTX 2. 提供创建交易方法(挖矿交易)
+func NewCoinbaseTX(address string, data string) *Transaction {
+	// 挖矿交易的特点：
+	// 1. 只有一个 input
+	// 2. 无需引用交易 id
+	// 3. 无需引用index
+	// 旷工由于挖矿成功后金钱由系统奖励获得无需指定引用上一个节点的输出签名，
+	// 所以这个 sig 字段可以由旷工自由填写数据，一般填写矿池的名字
+	input := TXInput{[]byte{}, -1, data}
+	// 旷工挖矿后金钱由系统的奖励获得
+	output := TXOutput{reward, address}
+	// 对于挖矿交易来说，只有一个input和一个output
+	tx := &Transaction{[]byte{}, []TXInput{input}, []TXOutput{output}}
+	tx.SetHash()
+	return tx
+}
+
 // 3. 创建挖矿交易
 // 4. 根据交易调整程序
