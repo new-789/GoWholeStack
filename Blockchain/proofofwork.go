@@ -48,7 +48,8 @@ func (p *ProofOfWork)Run() ([]byte, uint64) {
 			Uint64ToByte(b.TimeStamp),
 			Uint64ToByte(b.Difficulty),
 			Uint64ToByte(nonce),
-			b.Data,
+			// MerkelRoot 根只对区块头做 hash 值，区块体通过 MerkelRoot 产生影响
+			//b.Data,
 		}
 		// 将二维切片数字通过一维切片拼接起来，返回一个一维的切片
 		blockInfo := bytes.Join(tmp, []byte(""))

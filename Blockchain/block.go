@@ -28,7 +28,9 @@ type Block struct {
 	// a 当前区块哈希，正常比特币区块中没有当前区块的哈希，为了实现方便做了简化
 	Hash []byte
 	// b 数据
-	Data []byte
+	//Data []byte
+	// 真实的交易数组
+	Transactions []*Transaction
 }
 
 //1. 补充区块字段
@@ -47,7 +49,7 @@ func Uint64ToByte(num uint64) []byte  {
 }
 
 //NewBlock 2. 创建区块
-func NewBlock(data string, precHash []byte) *Block {
+func NewBlock(txs []*Transaction, precHash []byte) *Block {
 	block := &Block{
 		Version: 00,
 		PrevHash: precHash,
@@ -56,8 +58,10 @@ func NewBlock(data string, precHash []byte) *Block {
 		Difficulty: 0,  // 随便填写的无效值
 		Nonce: 0,  // 同上
 		Hash:     []byte{}, // 先填空，后面计算
-		Data:     []byte(data),
+		//Data:     []byte(data),
+		Transactions: txs,
 	}
+	block.MerkelRoot = block.MakeMerkelRoot()
 	// 创建一个 pow 对象
 	pow := NewProofOfWork(block)
 	// 查找模目标的随机数，不停的进行哈希运算
@@ -125,3 +129,9 @@ func (b *Block)SetHash() {
 	b.Hash = hash[:] // 给当前区块添加哈希值
 }
 */
+
+// MakeMerkelRoot 模拟梅克尔根，只对交易的数据做简单的拼接，不做二叉树处理
+func (b *Block)MakeMerkelRoot() []byte {
+	// TODO
+	return []byte{}
+}

@@ -12,12 +12,14 @@ type Cli struct {
 }
 
 const Usage = `
-	addBlock --data DATA 	"add to blockChain"
-	printChan  				"print all blockChain data"
+	addBlock --data DATA 	"添加区块链"
+	printChan  				"正向打印区块链信息"
+	printChainR				"反向打印区块链信息"
+	getBalance --address ADDRESS "获取指定地址的余额"
 `
 
 // Run 接收参数的动作函数
-func (c *Cli)Run() {
+func (c *Cli) Run() {
 	// 1. 得到输入的所有命令
 	args := os.Args
 	if len(args) < 2 {
@@ -30,7 +32,7 @@ func (c *Cli)Run() {
 	switch cmd {
 	case "addBlock":
 		// 3. 添加区块
-		fmt.Printf("添加区块\n")
+		fmt.Printf("添加区块......\n")
 		// 确保命令有效
 		if len(args) == 4 && args[2] == "--data" {
 			// a. 获取命令行数据
@@ -43,11 +45,19 @@ func (c *Cli)Run() {
 		}
 	case "printChain":
 		// 打印区块
-		fmt.Println("打印区块")
-		c.PrintBlockChain()
+		fmt.Println("打印区块......")
+		c.PrintBLockChain()
+	case "printChainR":
+		fmt.Println("反向打印区块链.....")
+		c.PrintBlockChainReverse()
+	case "getBalance":
+		fmt.Println("获取余额......")
+		if len(args) == 4 && args[2] == "--address" {
+			address := args[3]
+			c.GetBalance(address)
+		}
 	default:
 		fmt.Println("命令无效，请检查")
 		fmt.Printf(Usage)
 	}
 }
-
