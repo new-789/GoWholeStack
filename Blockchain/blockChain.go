@@ -129,21 +129,37 @@ func (b *BlockChain) FindUTXOs(address string) []TXOutput {
 		// 2. 遍历交易
 		for _, tx := range block.Transactions {
 			fmt.Printf("current txid:%x\n", tx.TXID)
-			// 3. 遍历output，找到和自己相关的 utxo(再添加output 之前检查一下是凑已经消耗过)
+		OUTPUT:
+			// 3. 遍历output，找到和自己相关的 utxo(再添加output 之前检查一下是否已经消耗过)
 			for i, output := range tx.TXOutputs {
 				fmt.Printf("current index:%d\n", i)
+				// 在这里做一个过滤，将所有消耗过的 outputs 和当前的所即将添加的 Output 进行对比
+				// 如果两同则跳过，否则添加
+				// 如果当前交易id 存在于标识的 map 中，那么说明这个交易里面有消耗过的 output
+				if spentOutputs[string(tx.TXID)] == nil {
+					for _, j := range spentOutputs[string(tx.TXID)] {
+						if int64(i) == j {
+							// 当前准备添加的 output 已经消耗国了，不需要添加了
+							continue OUTPUT
+						}
+					}
+				}
 				// 这个 output 和目标的地址相同，说明该交易属于我，满足条件加到返回 otxo 数组中
 				if output.PubKeyHash == address {
 					UTXO = append(UTXO, output)
 				}
 			}
-			// 4. 遍历input，找到自己花费过的 utxo 集合(把自己消耗过的给标识出来)
-			for _, input := range tx.TXInputs {
-				// 如果当前 input 与目标一致，则说明该交易是消耗过的output，就加入 map 中
-				if input.Sig == address {
-					indexArray := spentOutputs[string(input.TXid)]
-					indexArray = append(indexArray, input.Index)
+			// 如果当前收入交易为挖矿交易，则不做遍历直接跳过
+			if !tx.IsCoinbase() {
+				// 4. 遍历input，找到自己花费过的 utxo 集合(把自己消耗过的给标识出来)
+				for _, input := range tx.TXInputs {
+					// 如果当前 input 与目标一致，则说明该交易是消耗过的output，就加入 map 中
+					if input.Sig == address {
+						spentOutputs[string(input.TXid)] = append(spentOutputs[string(input.TXid)], input.Index)
+					}
 				}
+			} else {
+				fmt.Printf("这是 coinbase 判断得到的结果属于挖矿交易 ，不做input 遍历...")
 			}
 		}
 		if len(block.PrevHash) == 0 {

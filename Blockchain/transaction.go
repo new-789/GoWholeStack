@@ -6,14 +6,15 @@ import (
 	"encoding/gob"
 	"log"
 )
+
 const reward = 12.5 // 挖矿奖励
 
 // 比特币交易 Demo
 
 // Transaction 1. 定义交易结构
 type Transaction struct {
-	TXID []byte  // 交易 ID
-	TXInputs []TXInput  // 交易输入数组
+	TXID      []byte    // 交易 ID
+	TXInputs  []TXInput // 交易输入数组
 	TXOutputs []TXOutput
 }
 
@@ -36,7 +37,7 @@ type TXOutput struct {
 }
 
 // SetHash 设置交易ID，直接将交易 Transaction 结构体进行hash 作为交易 ID
-func (tx *Transaction)SetHash() {
+func (tx *Transaction) SetHash() {
 	var buffer bytes.Buffer
 	encode := gob.NewEncoder(&buffer)
 	err := encode.Encode(tx)
@@ -46,6 +47,19 @@ func (tx *Transaction)SetHash() {
 	data := buffer.Bytes()
 	hash := sha256.Sum256(data)
 	tx.TXID = hash[:]
+}
+
+// IsCoinbase 函数，用来判断当前交易是否为挖矿交易
+func (tx *Transaction) IsCoinbase() bool {
+	// 1. 交易收入 Input 只有一个
+	if len(tx.TXInputs) == 1 {
+		input := tx.TXInputs[0]
+		// 2. 交易 id 为空 || 交易的 Index 为 -1 则说明该交易为挖矿交易
+		if !bytes.Equal(input.TXid, []byte{}) || input.Index != -1 {
+			return false
+		}
+	}
+	return true
 }
 
 // NewCoinbaseTX 2. 提供创建交易方法(挖矿交易)
