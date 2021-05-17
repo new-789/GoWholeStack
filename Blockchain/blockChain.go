@@ -12,17 +12,17 @@ import (
 // BlockChain 4. 引入区块链
 type BlockChain struct {
 	// 定义一个区块链数组
-	db *bolt.DB
-	tail []byte  // 用来存储最后一个区块的哈希值
+	db   *bolt.DB
+	tail []byte // 用来存储最后一个区块的哈希值
 }
 
 const (
 	blockChainDb = "blockChain.db"
-	blockBucket = "blockBucket"
+	blockBucket  = "blockBucket"
 )
+
 // 最后一个区块的哈希，从 bolt 数据库读出来的
 var lastHash []byte
-
 
 // NewBlockChain 5. 定义一个区块链
 func NewBlockChain(address string) *BlockChain {
@@ -64,7 +64,7 @@ func GenesisBlock(address string) *Block {
 }
 
 // AddBlock 5. 添加区块
-func (b *BlockChain)AddBlock(txs []*Transaction) {
+func (b *BlockChain) AddBlock(txs []*Transaction) {
 	// 获取最后一个区块作为当前区块的前区块哈希
 	db := b.db         // 区块链数据库
 	lastHash := b.tail // 获取最后一个区块的哈希值
@@ -87,7 +87,7 @@ func (b *BlockChain)AddBlock(txs []*Transaction) {
 }
 
 // PrintChain 反向打印区块链
-func (b *BlockChain)PrintChain() {
+func (b *BlockChain) PrintChain() {
 	blockHeight := 0
 	b.db.View(func(tx *bolt.Tx) error {
 		// Assume bucket exists and has keys
@@ -115,8 +115,41 @@ func (b *BlockChain)PrintChain() {
 }
 
 // FindUTXOs 找到指定地址的所有 utxo(未消费的输出)
-func (b *BlockChain)FindUTXOs(address string) []TXOutput {
+func (b *BlockChain) FindUTXOs(address string) []TXOutput {
 	var UTXO []TXOutput
+	//定义 map 用来保存消费过的 output ，key 的这个 output 的交易 id，value 是这份 交易中索引的数组
+	spentOutputs := make(map[string][]int64)
 	//TODO
+
+	// 创建迭代器
+	it := b.NewIterator()
+	for {
+		// 1. 遍历区块
+		block := it.Next()
+		// 2. 遍历交易
+		for _, tx := range block.Transactions {
+			fmt.Printf("current txid:%x\n", tx.TXID)
+			// 3. 遍历output，找到和自己相关的 utxo(再添加output 之前检查一下是凑已经消耗过)
+			for i, output := range tx.TXOutputs {
+				fmt.Printf("current index:%d\n", i)
+				// 这个 output 和目标的地址相同，说明该交易属于我，满足条件加到返回 otxo 数组中
+				if output.PubKeyHash == address {
+					UTXO = append(UTXO, output)
+				}
+			}
+			// 4. 遍历input，找到自己花费过的 utxo 集合(把自己消耗过的给标识出来)
+			for _, input := range tx.TXInputs {
+				// 如果当前 input 与目标一致，则说明该交易是消耗过的output，就加入 map 中
+				if input.Sig == address {
+					indexArray := spentOutputs[string(input.TXid)]
+					indexArray = append(indexArray, input.Index)
+				}
+			}
+		}
+		if len(block.PrevHash) == 0 {
+			fmt.Printf("区块遍历完成退出!")
+			break
+		}
+	}
 	return UTXO
 }
