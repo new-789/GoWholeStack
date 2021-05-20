@@ -47,3 +47,19 @@ func (c *Cli) GetBalance(address string) {
 	}
 	fmt.Printf("\"%s\" 的余额为：%f\n", address, total)
 }
+
+func (c *Cli)Send(from, to string, amount float64, miner, data string) {
+	fmt.Printf("from:%s to:%s amount:%f miner:%s data:%s\n", from, to, amount, miner, data)
+	// 具体逻辑 TODO
+	// 1. 创建挖矿交易
+	conbase := NewCoinbaseTX(miner, data)
+	// 2. 创建一个普通交易
+	tx := NewTransaction(from, to, amount, c.bc)
+	if tx == nil {
+		fmt.Println("无效的交易")
+		return
+	}
+	// 3. 添加到区块
+	c.bc.AddBlock([]*Transaction{conbase, tx})
+	fmt.Println("转账成功")
+}
