@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/boltdb/bolt"
 	"log"
+	"time"
 )
 
 // 区块的哈希值（即区块链的链条） Demo
@@ -41,7 +42,6 @@ func NewBlockChain(address string) *BlockChain {
 			}
 			// 创建一个创世块，并作为第一个区块添加到区块链中
 			genesisBlock := GenesisBlock(address)
-			fmt.Printf("genesisBlock:%s\n", genesisBlock)
 			// 写数据, Hash 作为 key, block 作为字节流(区块的数据)
 			bucket.Put(genesisBlock.Hash, genesisBlock.Serialize())
 			// 更新 LastHash 对应的最后一个区块的哈希到数据库，方便我们查找最后一个区块的哈希
@@ -103,7 +103,8 @@ func (b *BlockChain) PrintChain() {
 			fmt.Printf("版本号：%d\n", block.Version)
 			fmt.Printf("前区块哈希值：%x\n", block.PrevHash)
 			fmt.Printf("梅克尔根：%x\n", block.MerkelRoot)
-			fmt.Printf("时间戳：%d\n", block.TimeStamp)
+			timeOut := time.Unix(int64(block.TimeStamp), 0).Format("2006-01-02 15:04:05")
+			fmt.Printf("时间戳：%s\n", timeOut)
 			fmt.Printf("难度值（随便写的）：%d\n", block.Difficulty)
 			fmt.Printf("随机数：%d\n", block.Nonce)
 			fmt.Printf("当前区块哈希值：%x\n", block.Hash)
@@ -114,13 +115,11 @@ func (b *BlockChain) PrintChain() {
 	})
 }
 
-// FindUTXOs 找到指定地址的所有 utxo(未消费的输出)
+// FindUTXOs 找到指定地址的所有 utxo(未消费的上级区块输出)
 func (b *BlockChain) FindUTXOs(address string) []TXOutput {
 	var UTXO []TXOutput
 	//定义 map 用来保存消费过的 output ，key 的这个 output 的交易 id，value 是这份 交易中索引的数组
 	spentOutputs := make(map[string][]int64)
-	//TODO
-
 	// 创建迭代器
 	it := b.NewIterator()
 	for {
@@ -159,11 +158,11 @@ func (b *BlockChain) FindUTXOs(address string) []TXOutput {
 					}
 				}
 			} else {
-				fmt.Printf("这是 coinbase 判断得到的结果属于挖矿交易 ，不做input 遍历...")
+				//fmt.Printf("这是 coinbase 判断得到的结果属于挖矿交易 ，不做input 遍历...")
 			}
 		}
 		if len(block.PrevHash) == 0 {
-			fmt.Printf("区块遍历完成退出!")
+			//fmt.Printf("区块遍历完成退出!\n")
 			break
 		}
 	}
@@ -179,23 +178,26 @@ func (b *BlockChain) FindNeedUTXOs(from string, amount float64) (map[string][]ui
 	txs := b.FindUTXOTransactions(from)
 	for _, tx := range txs {
 		for i, output := range tx.TXOutputs {
-			// 比较转账金额，满足则直接返回 utxos,calc，不满足则继续统计
-			if calc < amount {
-				utxos[string(tx.TXID)] = append(utxos[string(tx.TXID)], uint64(i))
-				// 统计当前 utxo 的总额
-				calc += output.Value
-				// 通过计算满足条件后则返回 utxos,calc
-				if calc >= amount {
-					return utxos, calc
+			// 当交易中的转账人地址与转出方的地址相同时则比较转账金额，满足则直接返回 utxos,calc，不满足则继续统计
+			if from == output.PubKeyHash {
+				if calc < amount {
+					utxos[string(tx.TXID)] = append(utxos[string(tx.TXID)], uint64(i))
+					// 统计当前 utxo 的总额
+					calc += output.Value
+					// 通过计算满足条件后则返回 utxos,calc
+					if calc >= amount {
+						return utxos, calc
+					}
+				} else {
+					fmt.Printf("不满足转账金额，当前总额：%f， 目标金额：%f\n", calc, amount)
 				}
-			} else {
-				fmt.Printf("不满足转账金额，当前总额：%f， 目标金额：%f\n", calc, amount)
 			}
 		}
 	}
 	return utxos, calc
 }
 
+// FindUTXOTransactions 用来遍历所有交易，寻找所有上游链条中 output 集合中跟我有关的交易加入到 Transaction 中
 func (b *BlockChain) FindUTXOTransactions(address string) []*Transaction {
 	// 用来存储所有包含 utxo 交易集合
 	var txs []*Transaction
@@ -224,7 +226,7 @@ func (b *BlockChain) FindUTXOTransactions(address string) []*Transaction {
 				}
 				//这个output和我们目标的地址相同，满足条件，加到返回UTXO数组中
 				if output.PubKeyHash == address {
-					// !!!!!! 重点，返回所有包含我的 output 的交际的集合
+					// !!!!!! 重点，返回所有包含我的 output 交易的集合
 					txs = append(txs, tx)
 				}
 			}
@@ -238,7 +240,7 @@ func (b *BlockChain) FindUTXOTransactions(address string) []*Transaction {
 					}
 				}
 			} else {
-				fmt.Printf("这是coinbase 挖矿交易，不做 input 遍历")
+				//fmt.Printf("这是coinbase 挖矿交易，不做 input 遍历")
 			}
 		}
 		if len(block.PrevHash) == 0 {

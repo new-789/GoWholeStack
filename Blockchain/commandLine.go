@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 // 命令行逻辑功能实现Demo
 
@@ -21,7 +24,8 @@ func (c *Cli) PrintBlockChainReverse() {
 		fmt.Printf("版本号：%d\n", block.Version)
 		fmt.Printf("前一区块哈希值：%x\n", block.PrevHash)
 		fmt.Printf("梅克尔根：%x\n", block.MerkelRoot)
-		fmt.Printf("时间戳：%d\n", block.TimeStamp)
+		timeFormat := time.Unix(int64(block.TimeStamp), 0).Format("2006-01-02 15:04:05")
+		fmt.Printf("时间戳：%s\n", timeFormat)
 		fmt.Printf("难度值(随便写的后面改进)：%d\n", block.Difficulty)
 		fmt.Printf("随机数：%d\n", block.Nonce)
 		fmt.Printf("当前区块哈希值：%x\n", block.Hash)
@@ -32,11 +36,6 @@ func (c *Cli) PrintBlockChainReverse() {
 			break
 		}
 	}
-}
-
-func (c *Cli) AddBlock(data string) {
-	//c.bc.AddBlock(txs) TODO
-	fmt.Printf("添加区块成功！\n")
 }
 
 func (c *Cli) GetBalance(address string) {
@@ -50,7 +49,6 @@ func (c *Cli) GetBalance(address string) {
 
 func (c *Cli)Send(from, to string, amount float64, miner, data string) {
 	fmt.Printf("from:%s to:%s amount:%f miner:%s data:%s\n", from, to, amount, miner, data)
-	// 具体逻辑 TODO
 	// 1. 创建挖矿交易
 	conbase := NewCoinbaseTX(miner, data)
 	// 2. 创建一个普通交易

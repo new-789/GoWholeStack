@@ -52,6 +52,7 @@ func (tx *Transaction) SetHash() {
 
 // IsCoinbase 函数，用来判断当前交易是否为挖矿交易
 func (tx *Transaction) IsCoinbase() bool {
+	/*
 	// 1. 交易收入 Input 只有一个
 	if len(tx.TXInputs) == 1 {
 		input := tx.TXInputs[0]
@@ -60,7 +61,12 @@ func (tx *Transaction) IsCoinbase() bool {
 			return false
 		}
 	}
-	return true
+	 */
+	// 判断交易收入只有一个，且交易 id 等于 0，并且 交易 index 等于 -1，则说明为挖矿交易
+	if len(tx.TXInputs) == 1 && len(tx.TXInputs[0].TXid) == 0 && tx.TXInputs[0].Index == -1 {
+		return true
+	}
+	return false
 }
 
 // NewCoinbaseTX 2. 提供创建交易方法(挖矿交易)

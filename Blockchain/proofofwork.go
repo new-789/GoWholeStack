@@ -75,5 +75,4 @@ func (p *ProofOfWork)Run() ([]byte, uint64) {
 			nonce++
 		}
 	}
-	//return hash[:], nonce
 }

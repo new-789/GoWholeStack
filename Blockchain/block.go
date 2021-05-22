@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"encoding/binary"
 	"encoding/gob"
 	"log"
@@ -132,6 +133,13 @@ func (b *Block)SetHash() {
 
 // MakeMerkelRoot 模拟梅克尔根，只对交易的数据做简单的拼接，不做二叉树处理
 func (b *Block)MakeMerkelRoot() []byte {
-	// TODO
-	return []byte{}
+	var info []byte
+	//var finalInfo [][]byte
+	// 将交易的哈希值拼接起来在做整体做处理
+	for _, tx := range b.Transactions {
+		info = append(info, tx.TXID...)
+		//finalInfo = [][]byte{tx.TXID}
+	}
+	hash := sha256.Sum256(info)
+	return hash[:]
 }
