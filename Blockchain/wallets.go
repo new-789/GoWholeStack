@@ -19,8 +19,8 @@ type Wallets struct {
 // NewWallets 创建方法
 func NewWallets() *Wallets {
 	var wallets Wallets
-	wallets.WalletsMap = make(map[string]*Wallet)
-	//wallets := LoadFile()
+	//wallets.WalletsMap = make(map[string]*Wallet)
+	wallets.LoadFile()
 	return &wallets
 }
 
@@ -51,4 +51,30 @@ func (w *Wallets)SaveToFile() {
 	}
 }
 
-// 读取文件方法，将所有的 wallet 读出来
+// LoadFile 读取文件方法，将所有的 wallet 读出来
+func (w *Wallets)LoadFile() {
+	// 读取文件内容
+	content, err := ioutil.ReadFile("wallet.dat")
+	if err != nil {
+		log.Panic(err)
+	}
+	gob.Register(elliptic.P256()) // gob 注册 elliptic.P256()
+	// 解码操作
+	decode := gob.NewDecoder(bytes.NewReader(content))
+	var ws Wallets
+	err = decode.Decode(&ws)
+	if err != nil {
+		log.Panic(err)
+	}
+	// 对于结构来说，里面有 map 的，需要指定来赋值，不要在最外层进行赋值
+	w.WalletsMap = ws.WalletsMap
+}
+
+func (w *Wallets)GetAllAddresses() []string {
+	var addresses []string
+	// 遍历钱包将所有的 key 取出来保存在数据中并返回
+	for address := range w.WalletsMap {
+		addresses = append(addresses, address)
+	}
+	return addresses
+}

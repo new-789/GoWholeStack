@@ -62,16 +62,18 @@ func (c *Cli)Send(from, to string, amount float64, miner, data string) {
 	fmt.Println("转账成功")
 }
 
+// NewWalletCommand 创建一个新钱包地址
 func (c *Cli)NewWalletCommand() {
 	ws := NewWallets()
 	address := ws.CreateWallet()
-	//wallet := NewWallet()
-	//address := wallet.NewAddress()
-	//wallets := NewWallets()
-	//for address, _ := range wallets.WalletsMap {
-	//	//fmt.Printf("私钥:%v\n", wallet.Private)
-	//	//fmt.Printf("公钥:%v\n", wallet.PubKey)
-		fmt.Printf("wallet地址:%s\n", address)
-	//}
+	fmt.Printf("wallet地址:%s\n", address)
+}
 
+// GetListAddresses 获取所有钱包地址并打印
+func (c *Cli)GetListAddresses() {
+	ws := NewWallets()
+	addresses := ws.GetAllAddresses()
+	for _, address := range addresses {
+		fmt.Printf("wallet 地址:%v\n", address)
+	}
 }
