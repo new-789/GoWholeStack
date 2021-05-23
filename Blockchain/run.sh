@@ -1,6 +1,6 @@
 #!/bin/bash
 rm blockChain
 rm *.db
-# rm *.dat
+rm *.dat
 go build -o blockChain *.go
 ./blockChain

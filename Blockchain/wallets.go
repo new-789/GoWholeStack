@@ -6,9 +6,12 @@ import (
 	"encoding/gob"
 	"io/ioutil"
 	"log"
+	"os"
 )
 
 // 钱包管理功能实现demo
+
+const walletFileName = "wallet.dat"
 
 // Wallets 用来保存所有的 wallet 以及它的地址
 type Wallets struct {
@@ -19,7 +22,7 @@ type Wallets struct {
 // NewWallets 创建方法
 func NewWallets() *Wallets {
 	var wallets Wallets
-	//wallets.WalletsMap = make(map[string]*Wallet)
+	wallets.WalletsMap = make(map[string]*Wallet)
 	wallets.LoadFile()
 	return &wallets
 }
@@ -46,15 +49,20 @@ func (w *Wallets)SaveToFile() {
 	if err != nil {
 		log.Panic(err)
 	}
-	if err := ioutil.WriteFile("wallet.dat", buffer.Bytes(), 0600); err != nil {
+	if err := ioutil.WriteFile(walletFileName, buffer.Bytes(), 0600); err != nil {
 		log.Printf("将钱包地址存入文件失败：%v\n", err)
 	}
 }
 
 // LoadFile 读取文件方法，将所有的 wallet 读出来
 func (w *Wallets)LoadFile() {
+	// 读文件之前检查文件是否存在，不存在则直接退出
+	_, err := os.Stat(walletFileName)
+	if os.IsNotExist(err) { // 判断需要读取的文件是否存在
+		return
+	}
 	// 读取文件内容
-	content, err := ioutil.ReadFile("wallet.dat")
+	content, err := ioutil.ReadFile(walletFileName)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -70,6 +78,7 @@ func (w *Wallets)LoadFile() {
 	w.WalletsMap = ws.WalletsMap
 }
 
+// GetAllAddresses 获取所有钱包地址
 func (w *Wallets)GetAllAddresses() []string {
 	var addresses []string
 	// 遍历钱包将所有的 key 取出来保存在数据中并返回
