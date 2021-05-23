@@ -61,3 +61,14 @@ func (c *Cli)Send(from, to string, amount float64, miner, data string) {
 	c.bc.AddBlock([]*Transaction{conbase, tx})
 	fmt.Println("转账成功")
 }
+
+func (c *Cli)NewWalletCommand() {
+	//wallet := NewWallet()
+	//address := wallet.NewAddress()
+	wallets := NewWallets()
+	for address, _ := range wallets.WalletsMap {
+		//fmt.Printf("私钥:%v\n", wallet.Private)
+		//fmt.Printf("公钥:%v\n", wallet.PubKey)
+		fmt.Printf("wallet地址:%s\n", address)
+	}
+}

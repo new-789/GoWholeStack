@@ -17,6 +17,7 @@ const Usage = `
 	printChainR				"反向打印区块链信息"
 	getBalance --address ADDRESS "获取指定地址的余额"
 	send FROM TO AMOUNT MINER DATA "由  from 转 amount 给 to，由 miner 挖矿，同时写入 data"
+	newWallet 				"创建一个新的钱包(私钥公钥对)"
 `
 
 // Run 接收参数的动作函数
@@ -58,6 +59,9 @@ func (c *Cli) Run() {
 		miner := args[5]
 		data := args[6]
 		c.Send(from, to,amount, miner, data)
+	case "newWallet":
+		fmt.Println("创建新的钱包!....")
+		c.NewWalletCommand()
 	default:
 		fmt.Println("命令无效，请检查")
 		fmt.Printf(Usage)
