@@ -19,7 +19,7 @@ type Wallets struct {
 	WalletsMap map[string]*Wallet
 }
 
-// NewWallets 创建方法
+// NewWallets 创建方法，返回当前所有钱包的实例
 func NewWallets() *Wallets {
 	var wallets Wallets
 	wallets.WalletsMap = make(map[string]*Wallet)
@@ -46,6 +46,7 @@ func (w *Wallets)SaveToFile() {
 	gob.Register(elliptic.P256())  // gob 注册 elliptic.P256()
 	encode := gob.NewEncoder(&buffer)
 	err := encode.Encode(w)
+	// 注意此处一定要校验
 	if err != nil {
 		log.Panic(err)
 	}
