@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"log"
 	"math/big"
+	"strings"
 )
 
 const reward = 12.5 // 挖矿奖励
@@ -164,7 +165,7 @@ func NewTransaction(from, to string, amount float64, bc *BlockChain) *Transactio
 	}
 	tx := &Transaction{[]byte{}, inputs, outputs}
 	tx.SetHash()
-	// 签名数据准备
+	// 进行签名操作
 	bc.SignTransaction(tx, privateKey)
 	return tx
 }
@@ -226,8 +227,8 @@ func (tx *Transaction) TrimmedCopy() Transaction {
 	// 校验过程分析
 	// 所需要的数据：公钥、数据(txCopy 生成哈希)、签名
 	// 我们要对每一个签名过的 input 进行签名校验
-func (tx *Transaction) Verify(privateKey *ecdsa.PrivateKey, prevTXs map[string]Transaction) bool {
-	// 如果是挖矿交易不用进行校验
+func (tx *Transaction) Verify(prevTXs map[string]Transaction) bool {
+	// 如果是挖矿交易则不用进行校验
 	if tx.IsCoinbase() {
 		return true
 	}
@@ -261,4 +262,23 @@ func (tx *Transaction) Verify(privateKey *ecdsa.PrivateKey, prevTXs map[string]T
 		}
 	}
 	return true
+}
+
+// String 格式化打印区块信息
+func (tx *Transaction) String() string {
+	var lines []string
+	lines = append(lines, fmt.Sprintf("-------> Transaction %x:", tx.TXID))
+	for i, input := range tx.TXInputs {
+		lines = append(lines, fmt.Sprintf("        Input %d:", i))
+		lines = append(lines, fmt.Sprintf("			TXID %x:", input.TXid))
+		lines = append(lines, fmt.Sprintf("			Index %d:", input.Index))
+		lines = append(lines, fmt.Sprintf("			Signature %x:", input.Signature))
+		lines = append(lines, fmt.Sprintf("			PubKey %x:", input.PubKey))
+	}
+	for i, output := range tx.TXOutputs {
+		lines = append(lines, fmt.Sprintf("        Onput %d:", i))
+		lines = append(lines, fmt.Sprintf("			Value %f:", output.Value))
+		lines = append(lines, fmt.Sprintf("			PubKeyHash %x:", output.PubKeyHash))
+	}
+	return strings.Join(lines, "\n")
 }

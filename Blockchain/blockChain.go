@@ -67,6 +67,12 @@ func GenesisBlock(address string) *Block {
 
 // AddBlock 5. 添加区块
 func (b *BlockChain) AddBlock(txs []*Transaction) {
+	for _, tx := range txs {
+		if !b.VerifyTransaction(tx) {
+			fmt.Println("旷工发现无效交易....!")
+			return
+		}
+	}
 	// 获取最后一个区块作为当前区块的前区块哈希
 	db := b.db         // 区块链数据库
 	lastHash := b.tail // 获取最后一个区块的哈希值
@@ -239,7 +245,7 @@ func (b *BlockChain)FindTransactionByTXid(id []byte) (Transaction, error) {
 	return Transaction{}, errors.New("交易没有找到,无效的交易id,请检查")
 }
 
-// SignTransaction 准备签名的数据，将其封装到map中，然后对其进行签名
+// SignTransaction 签名
 func (b *BlockChain)SignTransaction(tx *Transaction, privateKey *ecdsa.PrivateKey) {
 	// 签名，交易创建的最后进行签名
 	prevTXs := make(map[string]Transaction)
@@ -256,4 +262,26 @@ func (b *BlockChain)SignTransaction(tx *Transaction, privateKey *ecdsa.PrivateKe
 		prevTXs[string(input.TXid)]=tx
 	}
 	tx.Sign(privateKey, prevTXs)
+}
+
+// VerifyTransaction 签名校验
+func (b *BlockChain) VerifyTransaction(tx *Transaction) bool {
+	if tx.IsCoinbase() {
+		return true
+	}
+	// 签名，交易创建的最后进行签名
+	prevTXs := make(map[string]Transaction)
+	// 找到所有引用的交易
+	// 1. 根据 inputs 来找，有多少个 input 就遍历多少次
+	// 2. 找到目标的交易(根据TXid来找)
+	// 3. 添加到 prevTXs 中
+	for _, input := range tx.TXInputs {
+		// 根据 id 查找交易本身，需要遍历整个区块链
+		tx, err := b.FindTransactionByTXid(input.TXid)
+		if err != nil {
+			log.Panic(err)
+		}
+		prevTXs[string(input.TXid)]=tx
+	}
+	return tx.Verify(prevTXs)
 }
