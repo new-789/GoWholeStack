@@ -29,7 +29,7 @@ func (c *Cli) PrintBlockChainReverse() {
 		fmt.Printf("难度值(随便写的后面改进)：%d\n", block.Difficulty)
 		fmt.Printf("随机数：%d\n", block.Nonce)
 		fmt.Printf("当前区块哈希值：%x\n", block.Hash)
-		fmt.Printf("区块数据：%s\n", block.Transactions[0].TXInputs[0].Sig)
+		fmt.Printf("区块数据：%s\n", block.Transactions[0].TXInputs[0].PubKey)
 		// 判断如果单钱区块链的前一个区块切片长度为零则说明迭代完毕，则退出
 		if len(block.PrevHash) == 0 {
 			fmt.Printf("区块链遍历结束！")
@@ -39,7 +39,14 @@ func (c *Cli) PrintBlockChainReverse() {
 }
 
 func (c *Cli) GetBalance(address string) {
-	utxos := c.bc.FindUTXOs(address)
+	// 1. 校验地址
+	if !IsValidAddress(address) {
+		fmt.Println("地址无效", address)
+		return
+	}
+	// 2. 生成公钥哈希
+	pubKeyHash := GetPubKeyFromAddress(address)
+	utxos := c.bc.FindUTXOs(pubKeyHash)
 	total := 0.0
 	for _, utxo := range utxos {
 		total += utxo.Value
@@ -47,8 +54,22 @@ func (c *Cli) GetBalance(address string) {
 	fmt.Printf("\"%s\" 的余额为：%f\n", address, total)
 }
 
-func (c *Cli)Send(from, to string, amount float64, miner, data string) {
+func (c *Cli) Send(from, to string, amount float64, miner, data string) {
 	fmt.Printf("from:%s to:%s amount:%f miner:%s data:%s\n", from, to, amount, miner, data)
+	// 校验地址
+	if !IsValidAddress(from) {
+		fmt.Println("地址无效 from", from)
+		return
+	}
+	if !IsValidAddress(to) {
+		fmt.Println("地址无效 to", to)
+		return
+	}
+	if !IsValidAddress(miner) {
+		fmt.Println("地址无效 miner", miner)
+		return
+	}
+
 	// 1. 创建挖矿交易
 	conbase := NewCoinbaseTX(miner, data)
 	// 2. 创建一个普通交易
@@ -63,14 +84,14 @@ func (c *Cli)Send(from, to string, amount float64, miner, data string) {
 }
 
 // NewWalletCommand 创建一个新钱包地址
-func (c *Cli)NewWalletCommand() {
+func (c *Cli) NewWalletCommand() {
 	ws := NewWallets()
 	address := ws.CreateWallet()
 	fmt.Printf("wallet地址:%s\n", address)
 }
 
 // GetListAddresses 获取所有钱包地址并打印
-func (c *Cli)GetListAddresses() {
+func (c *Cli) GetListAddresses() {
 	ws := NewWallets()
 	addresses := ws.GetAllAddresses()
 	for _, address := range addresses {

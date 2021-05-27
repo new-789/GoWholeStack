@@ -1,13 +1,7 @@
 package main
 
 func main() {
-	bc := NewBlockChain("八嘎")
+	bc := NewBlockChain("14PxkwD8cTpzNAT1PYXRwK4qRNbkBVtgFP")
 	cli := Cli{bc}
 	cli.Run()
-	/*
-	bc.AddBlock("111111111111111111111111111")
-	bc.AddBlock("222222222222222222222222222")
-
-
-	 */
 }

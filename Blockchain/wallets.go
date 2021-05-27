@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/elliptic"
 	"encoding/gob"
+	"github.com/btcsuite/btcutil/base58"
 	"io/ioutil"
 	"log"
 	"os"
@@ -50,9 +51,7 @@ func (w *Wallets)SaveToFile() {
 	if err != nil {
 		log.Panic(err)
 	}
-	if err := ioutil.WriteFile(walletFileName, buffer.Bytes(), 0600); err != nil {
-		log.Printf("将钱包地址存入文件失败：%v\n", err)
-	}
+	ioutil.WriteFile(walletFileName, buffer.Bytes(), 0600)
 }
 
 // LoadFile 读取文件方法，将所有的 wallet 读出来
@@ -87,4 +86,13 @@ func (w *Wallets)GetAllAddresses() []string {
 		addresses = append(addresses, address)
 	}
 	return addresses
+}
+
+// GetPubKeyFromAddress 通过地址返回公钥哈希指
+func GetPubKeyFromAddress(address string) []byte {
+	// 1. 解码
+	addressByte := base58.Decode(address) //25字节
+	// 2. 截取出公钥哈希：去除开头的 version(1字节) 和结尾的校验码(4字节）
+	pubKeyHash := addressByte[1 : len(addressByte)-4]
+	return pubKeyHash
 }

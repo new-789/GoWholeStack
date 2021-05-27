@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/sha256"
+	"fmt"
 	"github.com/btcsuite/btcutil/base58"
 	"golang.org/x/crypto/ripemd160"
 	"log"
@@ -39,7 +41,7 @@ func NewWallet() *Wallet {
 func (w *Wallet)NewAddress() string {
 	// 对公钥做 sh256 和 rip160 计算
 	pubKey := w.PubKey
-	rip160HashValue := HashPuKey(pubKey)
+	rip160HashValue := HashPubKey(pubKey)
 	version := byte(00) // 版本号
 	// 对 rip160 得到的结果与 version 进行拼接
 	paylood := append([]byte{version}, rip160HashValue...)
@@ -54,8 +56,8 @@ func (w *Wallet)NewAddress() string {
 	return address
 }
 
-// HashPuKey 对公钥进行 hash 及 rip160 计算
-func HashPuKey(data []byte) []byte {
+// HashPubKey 对公钥进行 hash 及 rip160 计算
+func HashPubKey(data []byte) []byte {
 	// 对公钥进行 sha256 计算
 	hash := sha256.Sum256(data)
 	// 理解为生成 hash160 编码器，通过 ripemd160 对公钥的 sha256 计算结果再次进行 rip160 计算
@@ -79,4 +81,22 @@ func CheckSum(data []byte) []byte {
 	// 前四字节校验码
 	checkCode := hash2[:4]
 	return checkCode
+}
+
+// IsValidAddress 校验地址
+func IsValidAddress(address string) bool {
+	// 1. 解码
+	addressByte := base58.Decode(address)
+	if len(addressByte) < 4 {
+		return false
+	}
+	// 2. 取数据
+	paylood := addressByte[:len(addressByte) - 4] // 去除后面四个
+	checksum1 := addressByte[len(addressByte)-4:] // 去处前面四个
+	// 3. 做 checksum 函数
+	checksum2 := CheckSum(paylood)
+	fmt.Printf("checksum1:%x\n", checksum1)
+	fmt.Printf("checksum2:%x\n", checksum2)
+	// 4. 比较
+	return bytes.Equal(checksum1, checksum2)
 }
