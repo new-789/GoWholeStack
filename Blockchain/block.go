@@ -25,7 +25,6 @@ type Block struct {
 	Difficulty uint64
 	// 6 随机数，以为就是挖矿要找的数据
 	Nonce uint64
-
 	// a 当前区块哈希，正常比特币区块中没有当前区块的哈希，为了实现方便做了简化
 	Hash []byte
 	// b 数据
